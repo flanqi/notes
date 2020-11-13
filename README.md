@@ -1,7 +1,10 @@
-### Some notes for
-* Stat
-* Python
-* R
-* SQL
+### Notes
+* theory
+\- stat & prob theory
+* python_notes
+\- basic python coding
 
-etc...
+
+### Programs
+* r_programs
+  * imputation.r \- _different imputation methods_
