@@ -42,7 +42,8 @@ TBD
 ## Logistic Regression
 TBD
 ## GLMs
-TBD
+Check the [Useful Tutorial](https://www.youtube.com/watch?v=vpKpFMUMaVw) here.
+
 ## Model evaluation
 ### Regression
 1. Metrics for evaluation
