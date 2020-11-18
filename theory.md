@@ -46,9 +46,35 @@ For tabular dataframe:
 **1. What are the differences bwteeen KNN and K-Means Clustering?**
 
 ### Linear Regression
-TBD
+Linear regression is a model that assumes a linear relationship between the input variables (X) and the single output variable (y).
+
+With a simple equation:
+
+```
+y = B0 + B1*x1 + ... + Bn * xN
+```
+
+B is regression coefficients, x values are the independent (explanatory) variables  and y is dependent variable.
+
+
 ### Logistic Regression
-TBD
+Logistic regression is a model that is used for classfication problems given the input variables (X) and the response variable (y). Since we cannot use a straight line to model probability (infinite range), we use a linear relationship to model the log odds of success - the logistic transform of p(x).
+
+With the equation：
+
+```
+log(p/1-p) = B0 + B1*x1 + ... + Bn * xN
+```
+
+Interpretation of coefficient:
+
+<img src="https://latex.codecogs.com/gif.latex?\frac{\psi(x_i+1)}{\psi(x_i)}=exp(\beta_i)" /> 
+<img src="https://latex.codecogs.com/gif.latex?\ln(\psi(x+1))-\ln(\psi(x))=\beta_i" /> 
+
+So B_i is the change in log-odds of success if x_i increases by 1 unit.  In addition, if x_i increases by 1 unit, the odds of success will increase by exp(B_i).
+
+Note: here <img src="https://latex.codecogs.com/gif.latex?\psi(x)=\frac{p(x)}{1-p(x)}" />  is the log-odds of success conditioned on the predictor x.
+
 ### GLMs
 Check the [Useful Tutorial](https://www.youtube.com/watch?v=vpKpFMUMaVw) here.
 
