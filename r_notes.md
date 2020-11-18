@@ -2,6 +2,8 @@
 * [Data Manipulation](#data-manipulation)
 * [Data Visualization](#data-visualization)
 * [ML Modeling](#ml-modeling)
+  * [Basic Statistics](#basic-statistics)
+  * [Linear Regression](#linear-regression)
   * [Logistic Regression](#logistic-regression)
   * [Discriminant Analysis](#discriminant-analysis)
   * [GLMs](#glms)
