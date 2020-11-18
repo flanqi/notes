@@ -1,4 +1,12 @@
-# Statistics
+## Table of contents
+
+* [Statistics](#statistics)
+* [Data Manipulation](#data-manipulation)
+* [ML](#modeling)
+  * [Linear Regression](#linear-regression)
+  * [Logistic Regression](#logistic-regression)
+  * [GLMs](#glms)
+## Statistics
 **1. What is correlation?**
 
 Correlation is a measure of linear relationship between two variables. It is defined by the formula:
@@ -18,7 +26,7 @@ When building a model, we always face the trade-off between a model's bias and v
 
 **3. What is sampling?**
 
-# Data Manipulation
+## Data Manipulation
 **1. What are some ways of data imputation?**
 
 For time series:
@@ -34,18 +42,14 @@ For tabular dataframe:
 4. KNN imputation (averaging nearest k neighbors)
 5. MICE imputation (default: with PMM - predicative mean matching)
 
-# Modeling
+## Modeling
 **1. What are the differences bwteeen KNN and K-Means Clustering?**
 
-## Linear Regression
+### Linear Regression
 TBD
-## Logistic Regression
+### Logistic Regression
 TBD
-## GLMs
+### GLMs
 Check the [Useful Tutorial](https://www.youtube.com/watch?v=vpKpFMUMaVw) here.
 
-## Model evaluation
-### Regression
-1. Metrics for evaluation
-### Classification
-1. Confusion matrix
+
