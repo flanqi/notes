@@ -1,3 +1,11 @@
+## Table of contents
+
+* [Set Up](#set-up)
+* [Data Manipulation](#data-manipulation)
+* [Data Visualization](#data-visualization)
+* [ML Modeling](#ml-modeling)
+
+
 ## Set Up
 1. Filter out warnings
 ```python
