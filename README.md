@@ -4,8 +4,9 @@
 * python_notes
 \- basic python coding
 * r_notes
-\- baisc r coding
-
+\- basic r coding
+* oop
+\- oop python questions
 ### Programs
 * r_programs
   * imputation.r \- _different imputation methods_
