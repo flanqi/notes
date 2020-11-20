@@ -1,4 +1,15 @@
-## Common Table Expressions (CTE)
+## Table of contents
+
+* [CTE](#common-table-expressions)
+* [Set Comparison](#set-comparison)
+* [View](#view)
+* [Window Functions](#window-functions)
+* [Datetime Functions](#datetime-functions)
+* [Triggers](#triggers)
+* [Database Construction](#database-construction)
+* [Sample Questions](#Sample Questions)
+
+## Common Table Expressions
 ```sql
 with table_name(col_list) as
 (
@@ -54,3 +65,7 @@ create view tmp as
 ## Window Functions
 ## Datetime Functions
 ## Triggers
+## Database Construction
+## Sample Questions
+* [HackerRank](https://www.hackerrank.com/domains/sql)
+* [LeetCode](https://leetcode.com/problemset/all/?search=sql)
