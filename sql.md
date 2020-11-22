@@ -7,7 +7,7 @@
 * [Datetime Functions](#datetime-functions)
 * [Triggers](#triggers)
 * [Database Construction](#database-construction)
-* [Sample Questions](#Sample Questions)
+* [Sample Questions](#sample-questions)
 
 ## Common Table Expressions
 ```sql
