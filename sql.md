@@ -60,10 +60,44 @@ NOT EXISTS does exactly the opposite.
 Creating view saves time when some query is often used. It creates a "screenshot" for some table.
 ```sql
 create view tmp as
-  select_query
+  select_query;
 ```
 ## Window Functions
+### ROWS / RANGE / GROUPS
+sum over values of 3 preceding rows and the current row after ordering
+```sql
+select sum(quantity) over (order by quantity rows 3 preceding) as rowSum 
+from items;
+```
+sum over values from C - 3 to C if current row value is C
+```sql
+select sum(quantity) over (order by quantity range 3 preceding) as rangeSum
+from items;
+```
+sum over values from 3 preceding groups and the current group
+```sql
+select sum(quantity) over (order by quantity groups 3 preceding) as groupSum
+from items;
+```
+**Note:** Instead of N PRECEDING, one can use UNBOUNDED PRECEDING/FOLLOWING, or use rows/range/groups BETWEEN 1 PRECEDING AND 1 FOLLOWING.
+
+### PARTITION BY
+```sql
+select rank() over (partition by month order by quantity desc) as sales_monthly_rank from items;
+```
+**other window functions**
+
+DENSE_RANK(): rank with no gaps 
+
+ROW_NUMBER()
+
+
 ## Datetime Functions
+### DATEDIFF
+Returns the number of dates between two dates
+```sql
+select datediff("2017-06-25", "2017-06-15");
+```
 ## Triggers
 ## Database Construction
 ## Sample Questions
