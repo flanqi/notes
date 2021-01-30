@@ -1,7 +1,7 @@
 ## Table of contents
 * [Data Manipulation](#data-manipulation)
 * [Data Visualization](#data-visualization)
-* [ML Modeling](#ml-modeling)
+* [Basic ML](#basic-ml)
   * [Basic Statistics](#basic-statistics)
   * [Linear Regression](#linear-regression)
   * [Logistic Regression](#logistic-regression)
@@ -9,6 +9,7 @@
   * [Discriminant Analysis](#discriminant-analysis)
   * [Survival Analysis](#survival-analysis)
   * [KMeans Clustering](#kmeans-clustering)
+* [Deep Learning](#deep-learning)
 ## Data Manipulation
 ### Read data
 ```r
@@ -115,6 +116,18 @@ substr("hello",1,4) # -> "hell"
 substr(df$Species,1,4) 
 ```
 ## Data Visualization
+Click [here](https://www.statmethods.net/advgraphs/parameters.html) to see common r plot parameters.
+
+*Examples*.
+
+| parameter     | description             |
+| ------------- |:-----------------------:|
+| cex           | size of text and simbol | 
+| pch           | shape of points         |
+| lty           | line type               |
+| lwd           | line width              |
+| col           | color                   |
+
 ### Scatterplot
 
 ```r
@@ -127,7 +140,13 @@ plot(data$x, data$y,
 ggplot(df, aes(x=wt, y=mpg)) +
   geom_point(size=2, shape=23)
 ```
-## ML Modeling
+
+Matrix Scatterplot of Multiple Variables
+```r
+pairs(df, cex = 0.5, pch = 16) 
+```
+
+## Basic ML
 ### Basic Statistics
 ```r
 sd(list) # standard deviation
@@ -406,4 +425,65 @@ xlab="Cluster Mean"
 ))
 invisible(plotdat)
 }
+```
+## Deep Learning
+### Neural Networks
+Standardization and Normalization
+```r
+# standardize predictors
+df[1:k] = sapply(df[1:k], function(x) (x-mean(x))/sd(x)) # suppose column 1 to k are predictors
+
+# normalize output, if the output layer is sigmoid
+df[k+1] = (df[k+1] - min(df[k+1])) / (max(df[k+1]) - min(df[k+1]))
+```
+
+simple NN (one hidden layer)
+```r
+library(nnet)
+nn = nnet(target ~ ., df, linout=T, skip=F, size=10, decay=0.1, maxit = 1000, trace=F)
+# linout: whether the output is linear
+# skip=T adds a linear combination term to model output (originally the output might has a nonlinear activation)
+# size: number of nodes in the hidden layer
+# decay: regularization multiplier
+# maxit: maximum iterations
+
+summary(nn) # this gives all model parameters/weights
+yhat = as.numerica(predict(nn1)) # you can add newdata in the predict function
+```
+
+### Interpret Neural Networks
+
+#### ALE Plots
+
+first-order ALE
+```r
+library(ALEPlot)
+yhat = function(X.model, newdata) {
+ as.numeric(predict(X.model, newdata))
+}
+
+par(mfrow=c(2,4)) # 2 rows, each row has 4 plots, modify this based on real df
+for (j in 1:8)  {
+ ALEPlot(df[,1:8], nn, pred.fun=yhat, J=j, K=50, NA.plot = TRUE)  #K=number of points/bins you want to use for x-axis
+ rug(CRT1[,j])
+}  ## This creates main effect ALE plots for all k predictor, the black ticks on the x-axis appear when there's a training value.
+```
+
+second-order ALE
+```r
+par(mfrow=c(2,2))  ## This creates 2nd-order interaction ALE plots for x1, x2, x8
+ALEPlot(df[,1:8], nn, pred.fun=yhat, J=c(1,2), K=50, NA.plot = TRUE)
+ALEPlot(df[,1:8], nn, pred.fun=yhat, J=c(1,8), K=50, NA.plot = TRUE)
+ALEPlot(df[,1:8], nn, pred.fun=yhat, J=c(2,8), K=50, NA.plot = TRUE)
+```
+
+#### PD Plots
+```r
+# interaction between x1 and x8
+f0 = mean(df$target)
+f1 = ALEPlot(df[,1:8], nn, pred.fun=yhat, J=1)
+f8 = ALEPlot(df[,1:8], nn, pred.fun=yhat, J=8)
+f18 = ALEPlot(df[,1:8], nn, pred.fun=yhat, J=c(1,8))
+f18.combined = f0 + outer(f1$f.values, rep(1,13)) + outer(rep(1,51), f8$f.values) + f18$f.values
+image(f1$x.values, f8$x.values, f18.combined, xlab=names(df)[1], ylab=names(df)[8], xlim=range(f1$x.values), y=range(f8$x.values), xaxs='i', yaxs='i')
 ```
