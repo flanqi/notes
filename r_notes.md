@@ -5,8 +5,9 @@
   * [Basic Statistics](#basic-statistics)
   * [Linear Regression](#linear-regression)
   * [Logistic Regression](#logistic-regression)
-  * [Discriminant Analysis](#discriminant-analysis)
   * [GLMs](#glms)
+  * [Discriminant Analysis](#discriminant-analysis)
+  * [Survival Analysis](#survival-analysis)
 ## Data Manipulation
 ### Read data
 ```r
@@ -270,6 +271,9 @@ model = clm(Y ~ X, data = df)
 # prediction
 predict = predict(model, newdata = test) 
 ```
+### GLMs
+to be finished.
+
 ### Discriminant Analysis
 #### Fisher Discriminant Function
 ```r
@@ -285,5 +289,68 @@ predict(fit,newdata=data.frame(Petal_width=1.5,Petal_length=4,
 Sepal_width=3,Sepal_length=5.5))$posterior
 ```
 
-### GLMs
+### Survival Analysis
 
+```r
+library(survival)
+fit = survfit(Surv(t, churn) ~ 1. data = df, weight = count) # df is not in long-form, at each customer time t, the number of customers churned / censored are stored in variable "count"
+summary(fit)
+```
+
+Survival Function Plot (this model gives the same results as in KM model):
+```r
+plot(fit)
+```
+
+survfit doesn't provide harzard and pdf plots, but we can extract results from the summary table.
+```r
+# table
+res = summary(fit)
+cols = lapply(c(2:6,8:11), function(x) res[x])
+table = do.call(data.frame, cols)
+
+# harzard rate plot
+plot(table$time, table$n.event/table$n.risk, type = 'l', xlab = 'time', ylab = 'harzard rate')
+
+# pdf plot
+plot(table$time, (table$n.event/table$n.risk)*lag(table$surv,default = 1), type = 'l', xlab = 'time', ylab = 'pdf')
+
+# survival function plot
+plot(table$time, table$surv, type = 'l', xlab = 'time', ylab = 'survival function')
+```
+#### Stratified Survival Analysis
+
+```r
+# seperate survival model for different type of service length
+fit = survfit(Surv(t, churn) ~ servicelen, data = df, weight = count)
+
+# survival function plot
+plot(fit, lty = 1:3) # suppose we have 3 types of service length 
+legend(0.5,0.3,c('1 month', '6 months', '12 months'), lty=1:3, cex=0.8)
+```
+we can use the same way to extract summary table and plot harzard rates and pdf (in this case, we need to separate the tables into 3 groups).
+
+#### Discrete Time Model
+
+In discrete time model, we need to convert the data into long format, i.e, each (or each group of) customer has one row at each customer time t.
+
+Turn data into long format:
+```r
+df_long = survSplit(data = df, cut = 0:12, end = 't', event = 'churn')
+# here cut is usually 0 : max(t)
+```
+
+Simple Retention Model (r_t = r)
+```r
+fit = glm(churn ~ 1, binomial, df_long, weight = count)
+summary(fit)
+r = 1-1/(1+exp(-fit$coefficients)) # retention rate
+```
+General Retention Model (r_t)
+```r
+fit = glm(churn ~ factor(t), binomial, df_long, count)
+summary(fit)
+```
+
+#### Migration Model
+to be finished
