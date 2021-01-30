@@ -8,6 +8,7 @@
   * [GLMs](#glms)
   * [Discriminant Analysis](#discriminant-analysis)
   * [Survival Analysis](#survival-analysis)
+  * [KMeans Clustering](#kmeans-clustering)
 ## Data Manipulation
 ### Read data
 ```r
@@ -354,3 +355,55 @@ summary(fit)
 
 #### Migration Model
 to be finished
+
+### KMeans Clustering
+
+```r
+fit = kmeans(df,3,100,100) # 3 clusters, 100 max iterations, 100 initializations and k-means choose the best one
+```
+
+summary function
+```r
+summary.kmeans = function(fit)
+{
+p = ncol(fit$centers)
+K = nrow(fit$centers)
+n = sum(fit$size)
+xbar = t(fit$centers)%*%fit$size/n
+print(data.frame(
+n=c(fit$size, n),
+Pct=(round(c(fit$size, n)/n,2)),
+round(rbind(fit$centers, t(xbar)), 2),
+RMSE = round(sqrt(c(fit$withinss/(p*(fit$size-1)), fit$tot.withinss/(p*(n-K)))), 4)
+))
+cat("SSE=", fit$tot.withinss, "; SSB=", fit$betweenss, "; SST=", fit$totss, "\n")
+cat("R-Squared = ", fit$betweenss/fit$totss, "\n")
+cat("Pseudo F = ", (fit$betweenss/(K-1))/(fit$tot.withinss/(n-K)), "\n\n");
+invisible(list(Rsqr=fit$betweenss/fit$totss,
+F=(fit$betweenss/(K-1))/(fit$tot.withinss/(n-K))) )
+}
+```
+
+plot the clusters (for profiling)
+```r
+plot.kmeans = function(fit,boxplot=F)
+{
+require(lattice)
+p = ncol(fit$centers)
+k = nrow(fit$centers)
+plotdat = data.frame(
+mu=as.vector(fit$centers),
+clus=factor(rep(1:k, p)),
+var=factor( 0:(p*k-1) %/% k, labels=colnames(fit$centers))
+)
+print(dotplot(var~mu|clus, data=plotdat,
+panel=function(...){
+panel.dotplot(...)
+panel.abline(v=0, lwd=.1)
+},
+layout=c(k,1),
+xlab="Cluster Mean"
+))
+invisible(plotdat)
+}
+```
