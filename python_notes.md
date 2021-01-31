@@ -4,6 +4,7 @@
 * [Data Manipulation](#data-manipulation)
 * [Data Visualization](#data-visualization)
 * [ML Modeling](#ml-modeling)
+    * [Clustering](#clustering)
 
 
 ## Set Up
@@ -79,6 +80,15 @@ df.replace(0, np.nan, inplace=True)
 df.dropna(inplace=False)
 ```
 ## Data Visualization
+Common matplotlib parameters.
+
+
+| parameter     | description             |
+| ------------- |:-----------------------:|
+| s             | size of marker          | 
+| c             | color                   |
+
+
 1. Line charts color by group
 ```python
 fig, ax = plt.subplots(figsize=(8,5))
@@ -118,3 +128,83 @@ plt.title('Missing Values Heatmap', )
 sns.heatmap(df2[cols].isna(), cmap=sns.color_palette(colours));
 ```
 ## ML Modeling
+### Clustering
+#### K-Means Clustering
+Preprocessing
+```python
+# standardization
+from sklearn import preprocessing
+df['Zvar'] = preprocessing.scale(df.var)
+```
+
+```python
+from sklearn.cluster import KMeans
+
+model = KMeans(c_clusters=5, tol=1e-6, n_init=100, random_state=42)
+model.fit(df)
+print(model.cluster_centers_) # means of clusters
+
+pd.crosstab(index=model.labels_, columns="count") # counts of clusters
+df['cluster'] = model.labels_ # add assignments to df
+df.boxplot('var', by='cluster') # profile on 'var'
+model.inertia_ # SSE, total within-cluster error
+
+# plots
+plt.scatter(df['var1'], df['var2'], c=model.labels_) # 2-d cluster plot
+centers = model.cluster_centers_
+plt.scatter(centers[:,0], centers[:,1], c=[0,1,2,3,4], s=200, alpha=0.5) # add centers to clusters
+plt.show()
+```
+
+Profiling
+```python
+# anova test on var
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
+fit = ols('var ~ C(model)', data=df).fit() 
+table = sm.stats.anova_lm(fit, typ=2)
+print(table)
+
+# run means of var by cluster using dplyr
+from dfply import *
+(df >> group_by(X.model) >> summarize(meanvar = X.var.mean()))
+# or
+df.groupby('cluster')['var'].mean()
+
+# profile categorical variable
+pd.crosstab(index=df['cluster'], columns=df['var'], normalize='columns')
+pd.crosstab(index=df['cluster'], columns=df['var'], normalize='index')
+
+smtab = sm.stats.Table.from_data(df[['cluster', 'var']])
+print(smtab.table_orig) # counts
+print(smtab.fittedvalues) # predicted values under independence
+print(smtab.resid_pearson) # residuals
+print(smtab.test_nominal_association().pvalue) # chi-square test p-value
+```
+
+#### Gaussian Mixture
+
+Choose the model type (covariance_type):
+1. *spherical*： all spherical with different variance/volume (VII)
+2. *diag*: variable volume, variable shape, axes orientation (VVI)
+3. *tied*: equal volume, equal shape, equal orientation, with rotation (EEE)
+4. *full*: all parameters variable, with rotation (VVV)
+
+```python
+from sklearn import mixture
+
+gmm = mixture.GaussianMixture(n_components=2, covariance_type='full').fit(df)
+
+# means
+gmm.means_
+
+# variances
+gmm.covariances_
+
+# within-cluster standard deviations
+np.sqrt(gmm.covariances_)
+
+# prior probabilities
+gmm.weights_
+```
