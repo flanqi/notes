@@ -24,13 +24,18 @@ import seaborn as sns
 ```
 ## Data Manipulation
 
-### Subset Dataframe
+### Indexing
 
 ```python
 df['col'] = df.col # returns a pd.series
 df[['col']] # returns a pd.dataframe
 ```
 NOTE: By using df.col, the column name cannot be a reserved word for python, and it cannot start with numbers, etc. This method of selecting data is called attribute access.
+
+```python
+l = [1, 2, 3]
+l[-1] # last element 3
+```
 
 Read more about [Indexing and Selecting with pandas](https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html).
 
@@ -88,6 +93,47 @@ Common matplotlib parameters.
 | s             | size of marker          | 
 | c             | color                   |
 
+0. Set Up
+set up parameters:
+```python
+# dpi
+plt.rcParams['figure.dpi'] = 150
+
+# figure size
+fig = plt.figure(figsize=(4,3))
+```
+
+legend location:
+```python
+# matplotlib
+plt.legend(loc='lower right')
+
+# sns
+g = sns.scatterplot(...)
+_ = g.legend(loc='center right')
+```
+
+subplots - figure and axes:
+```python
+fig, ax = plt.subplots(2,1) # 2 rows, 1 column; fig refers to the canvas, ax is used to add contents and set labels etc.
+ax1 = ax[0,0]
+ax2 = ax[1,0]
+# ax1.scatter(x,y) #add scatterplot to first plot
+
+# equivalently
+fig = plt.figure(figsize=(4,3))
+ax1 = plt.subplot(2,1,1) # 2 rows, 1 column, the first plot
+ax2 = plt.subplot(2,1,2) # the second plot
+```
+see more about this [here](https://stackoverflow.com/questions/34162443/why-do-many-examples-use-fig-ax-plt-subplots-in-matplotlib-pyplot-python).
+
+set plot labels & titles:
+```python
+ax.set_xlabel('xlabel')
+ax.set_ylabel('ylabel')
+
+ax.set_title(title')
+```
 
 1. Line charts color by group
 ```python
@@ -98,9 +144,9 @@ for idx, gp in df.groupby('group_variable'):
 
 plt.show()
 ```
-2. Legend position
+2. Reference Lines
 ```python
-plt.legend(loc='lower right')
+_ = g.axvline(x)
 ```
 3. Heatmap for correlations
 ```python
@@ -127,7 +173,104 @@ sns.set_style("whitegrid")
 plt.title('Missing Values Heatmap', )
 sns.heatmap(df2[cols].isna(), cmap=sns.color_palette(colours));
 ```
+
+5. Scatterplots
+
+```python
+g = sns.scatterplot(x='xvar', y='yvar', hue='category', data=df)
+```
+
+paired scatterplots:
+```python
+sns.pairplot(
+    data=df,
+    vars=['var1','var2','var3','var4']
+)
+```
 ## ML Modeling
+### Linear Regression
+prepare data:
+```python
+import statsmodel.api as sm
+
+# prepare Y and X
+y = df['target']
+X = y.drop('target', axis=1)
+X = (X-X.mean())/X.std()
+X = sm.add_constant(df[['var1','var2']], prepend=True) # add constant for intercept
+```
+
+modeling
+```python
+lm = sm.OLS(y, X).fit()
+lm.summary()
+```
+
+vifs:
+```python
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+vifs = pd.Series({
+    X.columns[i]:variance_inflation_factor(X.values,i) for i in range(1,X.shape[1])
+})
+vifs
+```
+
+fitted plot:
+```python
+fig, ax = plt.subplots(1,1,figsize=(4,3))
+_ = sns.scatterplot(x=lm.fittedvalues, y=lm.resid,ax=ax)
+_ = ax.set_xlabel('Fitted')
+_ = ax.set_ylabel('Residuals')
+```
+
+qq plot:
+```python
+from scipy.stats import probplot
+
+fig, ax = plt.subplots(1,1,figsize=(4,3))
+_ =  probplot(lm.resid_pearson, plot=ax)
+_ = ax.set_ylabel('Standardized residuals')
+_ = ax.set_title('Normal Q-Q plot')
+```
+
+### Logisic Regression
+prepare data:
+```python
+import statsmodel.api as sm
+
+# prepare Y and X
+y = df['target']
+X = sm.add_constant(df[['var1','var2']], prepend=True) # add constant for intercept
+```
+
+modeling:
+```python
+glm_binom = sm.GLM(y, X, family = sm.families.binomial()).fit()
+print(glm_binom.summary())
+```
+
+evaluation:
+```python
+glm_binom.params # coeff
+cov = glm_binom.cov_params() # covariance matrix for coeff
+variances = np.diag(cov) 
+std_err = pd.Series(np.sqrt(variances), index = cov.columns) # standard errors for coeff
+
+glm_binom.tvalues # z-scores/t-scores
+
+print('AIC: %.3f' % glm_binom.aic)
+print('log-likelihood: %.3f' % -glm_binom.deviance/2
+```
+
+predication:
+```python
+p_hat = glm_binom.predict(newdata) # pred prob
+df['class'] = 1*(glm_binom.predict(X) > cut_off)
+
+# calculate log-likelihood manually
+log_lik = np.sum(y*np.log(p_hat)+(1-y)*np.log(1-p_hat))
+```
 ### Clustering
 #### K-Means Clustering
 Preprocessing
