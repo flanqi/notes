@@ -283,7 +283,7 @@ df['Zvar'] = preprocessing.scale(df.var)
 ```python
 from sklearn.cluster import KMeans
 
-model = KMeans(c_clusters=5, tol=1e-6, n_init=100, random_state=42)
+model = KMeans(n_clusters=5, tol=1e-6, n_init=100, random_state=42)
 model.fit(df)
 print(model.cluster_centers_) # means of clusters
 
