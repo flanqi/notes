@@ -76,6 +76,9 @@ df['col'] = pd.to_datetime(df['col'], format='%Y-%m-%d %H:%M:%S')
 ```
 
 ### Missing Values
+External Packages:
+* [missingno](https://github.com/ResidentMario/missingno): Nullity Correlation, Missing Heatmaps
+
 1. replace 0 with nas (or vice versa)
 ```python
 df.replace(0, np.nan, inplace=True)
@@ -84,6 +87,12 @@ df.replace(0, np.nan, inplace=True)
 ```python
 df.dropna(inplace=False)
 ```
+
+### Imputation
+
+TBD
+
+
 ## Data Visualization
 Common matplotlib parameters.
 
