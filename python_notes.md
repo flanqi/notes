@@ -157,6 +157,7 @@ ax.set_xlabel('xlabel')
 ax.set_ylabel('ylabel')
 
 ax.set_title(title')
+_ = fig.suptitle('Main Title', fontsize=15) # main title for all subplots
 ```
 
 1. Line charts color by group
