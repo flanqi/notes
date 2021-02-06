@@ -2,6 +2,7 @@
 
 * [Set Up](#set-up)
 * [Data Manipulation](#data-manipulation)
+* [Data Sampling](#data-sampling)
 * [Data Visualization](#data-visualization)
 * [ML Modeling](#ml-modeling)
     * [Clustering](#clustering)
@@ -106,6 +107,13 @@ kds.mice(3, verbose=True)
 
 # Return the completed kernel data
 completed_data = kds.complete_data()
+```
+## Data Sampling
+
+[KS2 Test](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ks_2samp.html)
+```python
+from scipy import stats
+stats.ks_2samp(s1, s2) # small p-value --> samples are from different distributions
 ```
 
 ## Data Visualization
