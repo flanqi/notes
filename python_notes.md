@@ -90,8 +90,23 @@ df.dropna(inplace=False)
 
 ### Imputation
 
-TBD
+MICE with Random Forest ([miceforest](https://pypi.org/project/miceforest/))
+```python
+import miceforest as mf
 
+# Create kernel. 
+kds = mf.KernelDataSet(
+  df, # need to change categorical variables into dummies
+  save_all_iterations=True,
+  random_state=1991
+)
+
+# Run the MICE algorithm for 3 iterations
+kds.mice(3, verbose=True)
+
+# Return the completed kernel data
+completed_data = kds.complete_data()
+```
 
 ## Data Visualization
 Common matplotlib parameters.
