@@ -11,7 +11,9 @@
 
 Correlation is a measure of linear relationship between two variables. It is defined by the formula:
 
-<img src="https://latex.codecogs.com/svg.latex?\rho_{X,Y}=Corr(X,Y)=\frac{Cov(X,Y)}{\sigma_X\sigma_Y}=\frac{E(X-\mu_X)(Y-\mu_Y)}{\sigma_X\sigma_Y}" /> 
+<p align="center">
+  <img src="https://latex.codecogs.com/svg.latex?\rho_{X,Y}=Corr(X,Y)=\frac{Cov(X,Y)}{\sigma_X\sigma_Y}=\frac{E(X-\mu_X)(Y-\mu_Y)}{\sigma_X\sigma_Y}" /> 
+</p>
 
 It is a number between -1 and 1, and the higher the number is in absolute value, the stronger the relationship is. 
 
@@ -68,12 +70,12 @@ log(p/1-p) = B0 + B1*x1 + ... + Bn * xN
 
 Interpretation of coefficient:
 
-<img src="https://latex.codecogs.com/gif.latex?\frac{\psi(x_i+1)}{\psi(x_i)}=exp(\beta_i)" /> 
-<img src="https://latex.codecogs.com/gif.latex?\ln(\psi(x+1))-\ln(\psi(x))=\beta_i" /> 
+<img src="https://latex.codecogs.com/svg.latex?\frac{\psi(x_i+1)}{\psi(x_i)}=exp(\beta_i)" /> 
+<img src="https://latex.codecogs.com/svg.latex?\ln(\psi(x+1))-\ln(\psi(x))=\beta_i" /> 
 
 So B_i is the change in log-odds of success if x_i increases by 1 unit.  In addition, if x_i increases by 1 unit, the odds of success will increase by exp(B_i).
 
-Note: here <img src="https://latex.codecogs.com/gif.latex?\psi(x)=\frac{p(x)}{1-p(x)}" />  is the log-odds of success conditioned on the predictor x.
+Note: here <img src="https://latex.codecogs.com/svg.latex?\psi(x)=\frac{p(x)}{1-p(x)}" />  is the log-odds of success conditioned on the predictor x.
 
 ### GLMs
 Check the [Useful Tutorial](https://www.youtube.com/watch?v=vpKpFMUMaVw) here.
