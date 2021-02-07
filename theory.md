@@ -70,8 +70,8 @@ log(p/1-p) = B0 + B1*x1 + ... + Bn * xN
 
 Interpretation of coefficient:
 
-<img src="https://latex.codecogs.com/svg.latex?\frac{\psi(x_i+1)}{\psi(x_i)}=exp(\beta_i)" /> 
-<img src="https://latex.codecogs.com/svg.latex?\ln(\psi(x+1))-\ln(\psi(x))=\beta_i" /> 
+* <img src="https://latex.codecogs.com/svg.latex?\frac{\psi(x_i+1)}{\psi(x_i)}=exp(\beta_i)" /> 
+* <img src="https://latex.codecogs.com/svg.latex?\ln(\psi(x+1))-\ln(\psi(x))=\beta_i" /> 
 
 So B_i is the change in log-odds of success if x_i increases by 1 unit.  In addition, if x_i increases by 1 unit, the odds of success will increase by exp(B_i).
 
