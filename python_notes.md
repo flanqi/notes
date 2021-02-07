@@ -224,7 +224,7 @@ sns.pairplot(
     vars=['var1','var2','var3','var4']
 )
 ```
-## Basic ML 
+## Basic ML [R](./r_notes.md#basic-ml-python)
 ### Linear Regression [R](./r_notes.md#linear-regression-python)
 prepare data:
 ```python
