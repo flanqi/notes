@@ -3,7 +3,7 @@
 * [Set Up](#set-up)
 * [Data Manipulation](#data-manipulation-r)
 * [Data Sampling](#data-sampling)
-* [Data Visualization Python](#data-visualization-python)
+* [Data Visualization](#data-visualization-r)
 * [ML Modeling](#ml-modeling)
     * [Clustering](#clustering)
 
@@ -116,7 +116,7 @@ from scipy import stats
 stats.ks_2samp(s1, s2) # small p-value --> samples are from different distributions
 ```
 
-## Data Visualization Python [R](./r_notes.md#data-visualization)
+## Data Visualization [R](./r_notes.md#data-visualization)
 Common matplotlib parameters.
 
 
