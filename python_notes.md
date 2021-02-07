@@ -1,9 +1,9 @@
 ## Table of contents
 
 * [Set Up](#set-up)
-* [Data Manipulation](#data-manipulation)
+* [Data Manipulation](#data-manipulation-python)
 * [Data Sampling](#data-sampling)
-* [Data Visualization](#data-visualization)
+* [Data Visualization](#data-visualization-python)
 * [ML Modeling](#ml-modeling)
     * [Clustering](#clustering)
 
@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 %matplotlib inline # make your plot appear and stored in jupyter notebook
 import seaborn as sns
 ```
-## Data Manipulation [R](./r_notes.md#data-manipulation)
+## Data Manipulation Python [R](./r_notes.md#data-manipulation)
 
 ### Indexing
 
@@ -116,7 +116,7 @@ from scipy import stats
 stats.ks_2samp(s1, s2) # small p-value --> samples are from different distributions
 ```
 
-## Data Visualization
+## Data Visualization Python [R](./r_notes.md#data-visualization)
 Common matplotlib parameters.
 
 
@@ -221,7 +221,7 @@ sns.pairplot(
 )
 ```
 ## ML Modeling
-### Linear Regression
+### Linear Regression [R](./r_notes.md#linear-regression)
 prepare data:
 ```python
 import statsmodel.api as sm
@@ -267,7 +267,7 @@ _ = ax.set_ylabel('Standardized residuals')
 _ = ax.set_title('Normal Q-Q plot')
 ```
 
-### Logisic Regression
+### Logisic Regression [R](./r_notes.md#logistic-regression)
 prepare data:
 ```python
 import statsmodel.api as sm
@@ -305,7 +305,7 @@ df['class'] = 1*(glm_binom.predict(X) > cut_off)
 log_lik = np.sum(y*np.log(p_hat)+(1-y)*np.log(1-p_hat))
 ```
 ### Clustering
-#### K-Means Clustering
+#### K-Means Clustering [R](./r_notes.md#kmeans-clustering)
 Preprocessing
 ```python
 # standardization
