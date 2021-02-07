@@ -70,12 +70,12 @@ log(p/1-p) = B0 + B1*x1 + ... + Bn * xN
 
 Interpretation of coefficient:
 
-* <img src="https://latex.codecogs.com/svg.latex?\frac{\psi(x_i+1)}{\psi(x_i)}=exp(\beta_i)" /> 
-* <img src="https://latex.codecogs.com/svg.latex?\ln(\psi(x+1))-\ln(\psi(x))=\beta_i" /> 
+* <img src="https://render.githubusercontent.com/render/math?math=\frac{\psi(x_i%2B1)}{\psi(x_i)}=exp(\beta_i)&mode=inline">
+* <img src="https://render.githubusercontent.com/render/math?math=\ln(\psi(x%2B1))-\ln(\psi(x))=\beta_i&mode=inline">
 
 So B_i is the change in log-odds of success if x_i increases by 1 unit.  In addition, if x_i increases by 1 unit, the odds of success will increase by exp(B_i).
 
-Note: here <img src="https://latex.codecogs.com/svg.latex?\psi(x)=\frac{p(x)}{1-p(x)}" />  is the log-odds of success conditioned on the predictor x.
+Note: here <img src="https://render.githubusercontent.com/render/math?math=\psi(x)=\frac{p(x)}{1-p(x)}&mode=inline"> is the log-odds of success conditioned on the predictor x.
 
 ### GLMs
 Check the [Useful Tutorial](https://www.youtube.com/watch?v=vpKpFMUMaVw) here.
