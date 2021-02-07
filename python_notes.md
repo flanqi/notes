@@ -1,9 +1,9 @@
 ## Table of contents
 
 * [Set Up](#set-up)
-* [Data Manipulation](#data-manipulation-python)
+* [Data Manipulation Python](#data-manipulation-python)
 * [Data Sampling](#data-sampling)
-* [Data Visualization](#data-visualization-python)
+* [Data Visualization Python](#data-visualization-python)
 * [ML Modeling](#ml-modeling)
     * [Clustering](#clustering)
 
