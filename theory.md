@@ -2,7 +2,7 @@
 
 * [Statistics](#statistics)
 * [Data Manipulation](#data-manipulation)
-* [ML](#modeling)
+* [Basic ML](#basic-ml)
   * [Linear Regression](#linear-regression)
   * [Logistic Regression](#logistic-regression)
   * [GLMs](#glms)
@@ -11,7 +11,7 @@
 
 Correlation is a measure of linear relationship between two variables. It is defined by the formula:
 
-<img src="https://latex.codecogs.com/gif.latex?\rho_{X,Y}=Corr(X,Y)=\frac{Cov(X,Y)}{\sigma_X\sigma_Y}=\frac{E(X-\mu_X)(Y-\mu_Y)}{\sigma_X\sigma_Y}" /> 
+<img src="https://latex.codecogs.com/svg.latex?\rho_{X,Y}=Corr(X,Y)=\frac{Cov(X,Y)}{\sigma_X\sigma_Y}=\frac{E(X-\mu_X)(Y-\mu_Y)}{\sigma_X\sigma_Y}" /> 
 
 It is a number between -1 and 1, and the higher the number is in absolute value, the stronger the relationship is. 
 
@@ -42,7 +42,7 @@ For tabular dataframe:
 4. KNN imputation (averaging nearest k neighbors)
 5. MICE imputation (default: with PMM - predicative mean matching)
 
-## Modeling
+## Basic ML
 **1. What are the differences bwteeen KNN and K-Means Clustering?**
 
 ### Linear Regression
