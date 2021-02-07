@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 %matplotlib inline # make your plot appear and stored in jupyter notebook
 import seaborn as sns
 ```
-## Data Manipulation
+## Data Manipulation [R](./r_notes.md#data-manipulation)
 
 ### Indexing
 
