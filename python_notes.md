@@ -7,9 +7,9 @@
 * [Basic ML](#basic-ml-r)
    * [Linear Regression](#linear-regression-r)
    * [Logistic Regression](#logistic-regression-r)
-   * [Clustering](#clustering)
-      * [K-Means Clustering](#kmeans-clustering-r)
-      * [Gaussian Mixture](#gaussian-mixture)
+* [Clustering](#clustering-r)
+   * [K-Means Clustering](#kmeans-clustering-r)
+   * [Gaussian Mixture](#gaussian-mixture)
 
 
 ## Set Up
@@ -308,8 +308,8 @@ df['class'] = 1*(glm_binom.predict(X) > cut_off)
 # calculate log-likelihood manually
 log_lik = np.sum(y*np.log(p_hat)+(1-y)*np.log(1-p_hat))
 ```
-### Clustering
-#### K-Means Clustering [R](./r_notes.md#kmeans-clustering-python)
+## Clustering [R](./r_notes.md#clustering-python)
+### K-Means Clustering [R](./r_notes.md#kmeans-clustering-python)
 Preprocessing
 ```python
 # standardization
@@ -363,7 +363,7 @@ print(smtab.resid_pearson) # residuals
 print(smtab.test_nominal_association().pvalue) # chi-square test p-value
 ```
 
-#### Gaussian Mixture
+### Gaussian Mixture
 
 Choose the model type (covariance_type):
 1. *spherical*： all spherical with different variance/volume (VII)
