@@ -1,16 +1,16 @@
 ## Table of contents
 * [Data Manipulation](#data-manipulation)
-* [Data Visualization](#data-visualization)
+* [Data Visualization](#data-visualization-python)
 * [Basic ML](#basic-ml)
   * [Basic Statistics](#basic-statistics)
-  * [Linear Regression](#linear-regression)
-  * [Logistic Regression](#logistic-regression)
+  * [Linear Regression](#linear-regression-python)
+  * [Logistic Regression](#logistic-regression-python)
   * [GLMs](#glms)
   * [Discriminant Analysis](#discriminant-analysis)
   * [Survival Analysis](#survival-analysis)
-  * [KMeans Clustering](#kmeans-clustering)
+  * [KMeans Clustering](#kmeans-clustering-python)
 * [Deep Learning](#deep-learning)
-## Data Manipulation
+## Data Manipulation [Python](./python_notes.md#data-manipulation-r)
 ### Read data
 ```r
 df = read.csv("data.csv", skip = 1, stringAsFactors = F) # skip first row of data
@@ -115,7 +115,7 @@ df[complete.cases(df), ] # drop all rows with nas
 substr("hello",1,4) # -> "hell"
 substr(df$Species,1,4) 
 ```
-## Data Visualization
+## Data Visualization [Python](./python_notes.md#data-visualization-r)
 Click [here](https://www.statmethods.net/advgraphs/parameters.html) to see common r plot parameters.
 
 *Examples*.
@@ -146,14 +146,14 @@ Matrix Scatterplot of Multiple Variables
 pairs(df, cex = 0.5, pch = 16) 
 ```
 
-## Basic ML
+## Basic ML [Python](./python_notes.md#basic-ml-r)
 ### Basic Statistics
 ```r
 sd(list) # standard deviation
 cor(df) # correlation matrix
 cor.test(df$v1, df$v2) # correlation test
 ```
-### Linear Regression
+### Linear Regression [Python](./python_notes.md#linear-regression-r)
 ```r
 # fit the model
 model = lm(Y ~ ., data = df) 
@@ -204,7 +204,7 @@ small.lambda.betas <- coef(ridgecv$glmnet.fit)[,small.lambda.index]
 print(small.lambda.betas)
 ```
 
-### Logistic Regression
+### Logistic Regression [Python](./python_notes.md#logistic-regression-r)
 #### Binary Logistic Regression
 ```r
 # fit the model
@@ -375,7 +375,7 @@ summary(fit)
 #### Migration Model
 to be finished
 
-### KMeans Clustering
+### KMeans Clustering [Python](./python_notes.md#kmeans-clustering-r)
 
 ```r
 fit = kmeans(df,3,100,100) # 3 clusters, 100 max iterations, 100 initializations and k-means choose the best one
