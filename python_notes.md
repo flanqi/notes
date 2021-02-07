@@ -4,8 +4,12 @@
 * [Data Manipulation](#data-manipulation-r)
 * [Data Sampling](#data-sampling)
 * [Data Visualization](#data-visualization-r)
-* [ML Modeling](#ml-modeling)
-    * [Clustering](#clustering)
+* [Basic ML](#basic-ml-r)
+   * [Linear Regression](#linear-regression-r)
+   * [Logistic Regression](#logistic-regression-r)
+   * [Clustering](#clustering)
+      * [K-Means Clustering](#kmeans-clustering-r)
+      * [Gaussian Mixture](#gaussian-mixture)
 
 
 ## Set Up
@@ -23,7 +27,7 @@ import matplotlib.pyplot as plt
 %matplotlib inline # make your plot appear and stored in jupyter notebook
 import seaborn as sns
 ```
-## Data Manipulation [R](./r_notes.md#data-manipulation)
+## Data Manipulation [R](./r_notes.md#data-manipulation-python)
 
 ### Indexing
 
@@ -116,7 +120,7 @@ from scipy import stats
 stats.ks_2samp(s1, s2) # small p-value --> samples are from different distributions
 ```
 
-## Data Visualization [R](./r_notes.md#data-visualization)
+## Data Visualization [R](./r_notes.md#data-visualization-python)
 Common matplotlib parameters.
 
 
@@ -220,8 +224,8 @@ sns.pairplot(
     vars=['var1','var2','var3','var4']
 )
 ```
-## ML Modeling
-### Linear Regression [R](./r_notes.md#linear-regression)
+## Basic ML 
+### Linear Regression [R](./r_notes.md#linear-regression-python)
 prepare data:
 ```python
 import statsmodel.api as sm
@@ -267,7 +271,7 @@ _ = ax.set_ylabel('Standardized residuals')
 _ = ax.set_title('Normal Q-Q plot')
 ```
 
-### Logisic Regression [R](./r_notes.md#logistic-regression)
+### Logisic Regression [R](./r_notes.md#logistic-regression-python)
 prepare data:
 ```python
 import statsmodel.api as sm
@@ -305,7 +309,7 @@ df['class'] = 1*(glm_binom.predict(X) > cut_off)
 log_lik = np.sum(y*np.log(p_hat)+(1-y)*np.log(1-p_hat))
 ```
 ### Clustering
-#### K-Means Clustering [R](./r_notes.md#kmeans-clustering)
+#### K-Means Clustering [R](./r_notes.md#kmeans-clustering-python)
 Preprocessing
 ```python
 # standardization
