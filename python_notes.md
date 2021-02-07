@@ -1,7 +1,7 @@
 ## Table of contents
 
 * [Set Up](#set-up)
-* [Data Manipulation Python](#data-manipulation-python)
+* [Data Manipulation](#data-manipulation-r)
 * [Data Sampling](#data-sampling)
 * [Data Visualization Python](#data-visualization-python)
 * [ML Modeling](#ml-modeling)
@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 %matplotlib inline # make your plot appear and stored in jupyter notebook
 import seaborn as sns
 ```
-## Data Manipulation Python [R](./r_notes.md#data-manipulation)
+## Data Manipulation [R](./r_notes.md#data-manipulation)
 
 ### Indexing
 
