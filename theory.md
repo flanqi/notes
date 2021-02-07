@@ -26,8 +26,6 @@ Correlation between housing price and number of rooms is expected to be positive
 
 When building a model, we always face the trade-off between a model's bias and variance. A model with low bias means that it is very accurate in its predictions, but it is likely to have high variance, meaning that a small change in your data will lead to a big change in your model predictions, which is what we call over-fitting. On the other hand, a model with high bias and low variance is also not satisfactory because it does not see the pattern of the data you are modeling. A good model is in between those two cases, in which case the model performance won't change a lot when using different test data (low-variance), but still gives a good prediction in general (low-bias).
 
-**3. What is sampling?**
-
 ## Data Manipulation
 **1. What are some ways of data imputation?**
 
@@ -45,7 +43,6 @@ For tabular dataframe:
 5. MICE imputation (default: with PMM - predicative mean matching)
 
 ## Basic ML
-**1. What are the differences bwteeen KNN and K-Means Clustering?**
 
 ### Linear Regression
 Linear regression is a model that assumes a linear relationship between the input variables (X) and the single output variable (y).
