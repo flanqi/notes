@@ -5,6 +5,7 @@
 * [Data Sampling](#data-sampling)
 * [Data Visualization](#data-visualization-r)
 * [Basic ML](#basic-ml-r)
+   * [Cross Validation](#cross-validation-r)
    * [Linear Regression](#linear-regression-r)
    * [Logistic Regression](#logistic-regression-r)
 * [Clustering](#clustering-r)
@@ -225,6 +226,43 @@ sns.pairplot(
 )
 ```
 ## Basic ML [R](./r_notes.md#basic-ml-python)
+### Cross Validation [R](./r_notes.md#cross-validation-python)
+
+```python
+from sklearn.model_selection import KFold
+
+kf = KFold(n_splits=k, random_state=42, shuffle=True)
+
+eval1 = []
+eval2 = [] # the number of lists depends on the number of models you want to compare
+
+for train_index, test_index in kf.split(df):
+  # use .loc to subset training and testing data
+  # train your model
+  # evaluate your model on testing data
+  # append your evaluation scores (SSE, accuracy, ...) to eval1, eval2.
+
+print('Evaluation metric for model1: %.3f'%np.mean(eval1))
+print('Evaluation metric for model2: %.3f'%np.mean(eval2))
+```
+
+Replicated CV (average across different random states):
+```python
+from sklearn.model_selection import RepeatedKFold
+
+rkf = RepeatedKFold(n_splits=k, n_repeats=3, random_state=42)
+
+eval1 = []
+eval2 = [] # the number of lists depends on the number of models you want to compare
+
+for train_index, test_index in rkf.split(df):
+  # same procedure as before
+  # the first k rows are a set of k-folds, the next k rows are another set of k-folds, etc.
+
+print('Evaluation metric for model1: %.3f'%np.mean(eval1))
+print('Evaluation metric for model2: %.3f'%np.mean(eval2))
+```
+
 ### Linear Regression [R](./r_notes.md#linear-regression-python)
 prepare data:
 ```python
@@ -270,6 +308,38 @@ _ =  probplot(lm.resid_pearson, plot=ax)
 _ = ax.set_ylabel('Standardized residuals')
 _ = ax.set_title('Normal Q-Q plot')
 ```
+#### Ridge/Lasso Regression
+```python
+from sklearn.linear_model import Ridge, Lasso
+from sklearn.metrics import mean_square_error
+
+# standardize your predictors first
+
+model_ridge = Ridge(alpha=0.1, fit_intercept=True).fit(X,y) # alpha is the regularization parameter
+model_ridge.score(X,y) # training R_squared
+```
+Use CV to turn alpha:
+```python
+from sklearn.model_selection import RepeatedKFold
+
+alphas = [0, 0.001, 0.01, 0.1, 10, 100]
+mses = np.empty((5*3, len(alphas)))
+
+rkf = RepeatedKFold(n_splits=5, n_repeats=3, random_state=42)
+
+for i, (train_id, test_id) in enumerate(rkf.split(X)):
+  for j in range(len(alphas)):
+    model_ridge = Ridge(alpha=alphas[j], fit_intercept=True).fit(X.loc[train_id,:], y.loc[train_id]) # for numpy arrays, subset without loc
+    y_test_pred = model_ridge.predict(X.loc[test_id,:])
+    mses[i,j] = mean_square_error(y[test_id], y_test_pred)
+    
+mse_cv = mses.mean(axis=0)
+r2_cv = 1-mse_cv / y.var()
+
+print('Best L2 Regularization Penalty: %.3f'%alphas[r2_cv.argmax()])
+```
+
+Use the ame code for Lasso, and just replace the function name by Lasso.
 
 ### Logisic Regression [R](./r_notes.md#logistic-regression-python)
 prepare data:
