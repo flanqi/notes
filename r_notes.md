@@ -8,7 +8,9 @@
   * [GLMs](#glms)
   * [Discriminant Analysis](#discriminant-analysis)
   * [Survival Analysis](#survival-analysis)
+* [Clustering](#clustering-python)
   * [KMeans Clustering](#kmeans-clustering-python)
+  * [Hierarchical Clustering](#hierarchical-clustering-python)
 * [Deep Learning](#deep-learning)
 ## Data Manipulation [Python](./python_notes.md#data-manipulation-r)
 ### Read data
@@ -375,6 +377,8 @@ summary(fit)
 #### Migration Model
 to be finished
 
+## Clustering [Python](./python_notes.md#clustering-r)
+
 ### KMeans Clustering [Python](./python_notes.md#kmeans-clustering-r)
 
 ```r
@@ -426,6 +430,20 @@ xlab="Cluster Mean"
 invisible(plotdat)
 }
 ```
+
+### Hierarchical Clustering [Python](./python_notes.md#hierarchical-clustering-r)
+
+```r
+fit = hclust(df, method = c("average","single","complete","ward.D") )
+# average: average distance between points in cluster and new point
+# single: minimun distance between points in cluster and new point (chaining)
+# complete: maximum distance between points in cluster and new point
+# ward.D: minimize within-cluster SSE
+
+plot(fit) # plot the hierarchical tree
+fit$merge # a table of merging process; each row is a merge; negative means a point, positive means a cluster
+```
+
 ## Deep Learning
 ### Neural Networks
 Standardization and Normalization
