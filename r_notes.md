@@ -1,5 +1,5 @@
 ## Table of contents
-* [Data Manipulation](#data-manipulation)
+* [Data Manipulation](#data-manipulation-python)
 * [Data Visualization](#data-visualization-python)
 * [Basic ML](#basic-ml)
   * [Basic Statistics](#basic-statistics)
