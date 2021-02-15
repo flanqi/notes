@@ -355,7 +355,7 @@ print('Best L2 Regularization Penalty: %.3f'%alphas[r2_cv.argmax()])
 
 Use the ame code for Lasso, and just replace the function name by Lasso.
 
-### Logisic Regression [R](./r_notes.md#logistic-regression-python)
+### Logistic Regression [R](./r_notes.md#logistic-regression-python)
 prepare data:
 ```python
 import statsmodel.api as sm
@@ -398,7 +398,7 @@ log_lik = np.sum(y*np.log(p_hat)+(1-y)*np.log(1-p_hat))
     <b><a href="./python_notes.md">↥ back to top</a></b>
 </div>
 
-### K-Means Clustering [R](./r_notes.md#kmeans-clustering-python)
+### KMeans Clustering [R](./r_notes.md#kmeans-clustering-python)
 Preprocessing
 ```python
 # standardization
