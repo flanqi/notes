@@ -31,7 +31,7 @@ import seaborn as sns
 ## Data Manipulation [R](./r_notes.md#data-manipulation-python)
 
 <div align="right">
-    <b><a href="https://github.com/flanqi/notes/blob/main/python_notes.md#----">↥ back to top</a></b>
+    <b><a href="./python_notes.md#----">↥ back to top</a></b>
 </div>
 
 ### Indexing
