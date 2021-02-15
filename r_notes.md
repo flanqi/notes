@@ -326,7 +326,8 @@ fh = function(p) {
  yhat = p[1] + p[2]*x1 + p[3]*exp(p[4]*x2) # the nonlinear function
  return(sum((y-yhat)^2) # return SSE
 }
-out = nlm(fn, p=c(1,0,-0.5,-1), hessian = T)  # one can use some approximation methods to get a good initialization for p, hessian is used for deriving Fisher info matrix
+out = nlm(fn, p=c(1,0,-0.5,-1), hessian = T)  # one can use some approximation methods to get a good initialization for p
+# hessian is used for deriving Fisher info matrix
 
 theta = out$estimate # parameter estimates
 ```
@@ -335,6 +336,76 @@ nls() package:
 fn = function(X1,x2,p){p[1] + p[2]*x1 + p[3]*exp(p[4]*x2)}
 out = nls(y~fn(x1,x2,p), start=list(p=(1,0,-0.5,-1), trace=T)
 summary(out)
+```
+
+Estimating SEs for Parameters:
+1. Using Fisher Info Matrix (applicable with alrge sample size n)
+```r
+# nlm
+H = out$hessian
+MSE = out$minimum/(nrow(df)-p) # p = number of predictors
+I = (1/(2*MSE))*H # estimate of Fisher Info Matrix
+
+Cov = solve(I)
+se = sqrt(diag(Cov)) # SEs for parameters
+
+# nls
+Cov = vcov(out)
+se = sqrt(diag(Cov))
+```
+
+2. Boostrapping
+
+We use bootstrapping when we don't have large sample size to invoke asymptotics for our parameters, in which case we don't know the population distribution of parameters.
+
+```r
+library(boot)
+
+datafit = function(Z,i, theta0){
+ Zboot=Z[i,]
+ x = Zboot[[2]]; y = Zboot[[1]]
+ fn = function(p){yhat = p[1]*x/(p[2]+x); sum((y-yhat)^2)} # same as nlm() fn
+ out = nlm(fn, p=theta0)
+ theta = out$estimate
+}
+
+databoot = boot(df, datafit, R=20000, theta0=c(29.6, 13.4)) # R: number of copies of samples
+
+plot(databoot, index=1) # distribution and qq plot of first parameter
+# if the DSTN is approx. normal, we may use crude CI
+
+# estimate SEs
+Cov = cov(datafit$t)
+se = sqrt(diag(Cov))
+
+# estimate parameters
+databoot$t0
+
+# CIs
+boot.ci(databoot, conf = (.95,.99), index = 1, type = c("norm","basic")) # normal means crude CI, basic means reflected CI
+```
+
+Calculate CI and PI for a response:
+```r
+# CI
+datafit = function(Z,i,theta0, x_pred){
+ Zboot = Z[i,]
+ x = Zboot[[2]]; y = Zboot[[1]]
+ fn = function(p){yhat = p[1]*x/(p[2]+x); sum((y-yhat)^2)} # same as nlm() fn
+ out = nlm(fn, p=theta0)
+ theta = out$estimate
+ y_pred = theta[1]*x_pred/(theta[2]+x_pred)
+}
+
+databoot = boot(df, datafit, R=20000, theta0 = c(29.6,13.4), x_pred = 27)
+boot.ci(databoot, type = c("norm", "basic")) # CI
+
+# PI
+Yhat0 = databoot$t0
+SEYhat = sqrt(var(databoot$t))
+SEY = sqrt(SEYhat^2 + MSE)
+
+c(Yhat0-qnorm(0.975)*SEY,Yhat0+qnorm(0.975)*SEY) # PI
 ```
 
 ### Discriminant Analysis
