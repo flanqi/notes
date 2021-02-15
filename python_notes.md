@@ -30,11 +30,9 @@ import seaborn as sns
 ```
 ## Data Manipulation [R](./r_notes.md#data-manipulation-python)
 
-<br/>
 <div align="right">
     <b><a href="#----">↥ back to top</a></b>
 </div>
-<br/>
 
 ### Indexing
 
