@@ -269,7 +269,7 @@ cbind('sensitivity'=sensitivity, 'specificity' = specificity,
 
 **Imbalance Correction with Bayes Classifier**
 
-In binary classification, sometimes we have imbalanced data (<img src="https://latex.codecogs.com/svg.latex?p<0.1" />), and in this case, we want to upsample our minority class so that <img src="https://latex.codecogs.com/svg.latex?0.3\le p_s\le 0.7" />  (p_s is the corrected probability). (If CV is used, make sure to upsample within CV, i.e., CV before upsampling).
+In binary classification, sometimes we have imbalanced data (<img src="https://latex.codecogs.com/svg.latex?p<0.1" />), and in this case, we want to upsample our minority class so that <img src="https://render.githubusercontent.com/render/math?math=0.3\le p_s\le 0.7&mode=inline"> (p_s is the corrected probability). (If CV is used, make sure to upsample within CV, i.e., CV before upsampling).
 
 Steps for Imbalance Correction:
 1. Calculate <img src="https://latex.codecogs.com/svg.latex?p=P(Y=1)" /> for the entire original training set.
