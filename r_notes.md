@@ -8,11 +8,12 @@
   * [GLMs](#glms)
   * [Nonlinear Regression](#nonlinear-regression)
   * [Discriminant Analysis](#discriminant-analysis)
-  * [Survival Analysis](#survival-analysis)
 * [Clustering](#clustering-python)
   * [KMeans Clustering](#kmeans-clustering-python)
   * [Hierarchical Clustering](#hierarchical-clustering-python)
 * [Deep Learning](#deep-learning)
+* [Trees](#trees)
+
 ## Data Manipulation [Python](./python_notes.md#data-manipulation-r)
 
 <div align="right">
@@ -641,3 +642,40 @@ f18 = ALEPlot(df[,1:8], nn, pred.fun=yhat, J=c(1,8))
 f18.combined = f0 + outer(f1$f.values, rep(1,13)) + outer(rep(1,51), f8$f.values) + f18$f.values
 image(f1$x.values, f8$x.values, f18.combined, xlab=names(df)[1], ylab=names(df)[8], xlim=range(f1$x.values), y=range(f8$x.values), xaxs='i', yaxs='i')
 ```
+
+## Trees
+
+### Basic Trees
+There is no need to standardize predictors because trees are not influenced by linear transformations.
+
+```r
+library(rpart)
+
+control = rpart.control(minbucket=5, cp=0.0001, xval=10) # 10-fold built-in CV
+fit = rpart(target~., df, method = "anova", control=control)
+
+plotcp(fit) # plot the 1-R^2 cv versus cp
+printcp(fit) # find optimal cp based on xerror
+
+# pruning
+fit = prune(fit, cp=optimal_cp)
+fit$cptable[nrow(model4$cptable),] # summary
+
+# feature importance (based on reduction in SSE)
+fit$variable.importance
+
+# splits
+fit 
+
+# plot the tree
+library(rpart.plot)
+rpart.plot(fit)
+```
+
+The code is the same for classification trees. You only need to change the method to "class", and factor your target variable. Notice that the xerror in this case will be cv misclassifcation rate / stump misclassifcation rate. Follow the code below to recover cv misclassification rate:
+```r
+tbl = table(df$type)/nrow(df) # type is the target class
+optimal_xerror*(1-max(tbl))
+```
+
+
