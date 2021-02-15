@@ -316,7 +316,26 @@ This section is about parametric nonlinear regression models and nonlinear least
 <p align="center">
   <img src="https://latex.codecogs.com/svg.latex?Y_i=g(\boldsymbol{x_i},\boldsymbol{\theta})+\epsilon_i" /> 
 </p>
-, where g is the parametric non-linear function we use to model the relationship between Y and x, and <img src="https://render.githubusercontent.com/render/math?math=\epsilon&mode=inline"> is assumed to be normal with zero mean.
+, where g is the parametric non-linear function we use to model the relationship between Y and x, and epsilon is assumed to be normal with zero mean.
+
+nlm() package:
+```r
+x1 = df$x1; x2 = df$x2; y = df$y
+
+fh = function(p) {
+ yhat = p[1] + p[2]*x1 + p[3]*exp(p[4]*x2) # the nonlinear function
+ return(sum((y-yhat)^2) # return SSE
+}
+out = nlm(fn, p=c(1,0,-0.5,-1), hessian = T)  # one can use some approximation methods to get a good initialization for p, hessian is used for deriving Fisher info matrix
+
+theta = out$estimate # parameter estimates
+```
+nls() package:
+```r
+fn = function(X1,x2,p){p[1] + p[2]*x1 + p[3]*exp(p[4]*x2)}
+out = nls(y~fn(x1,x2,p), start=list(p=(1,0,-0.5,-1), trace=T)
+summary(out)
+```
 
 ### Discriminant Analysis
 #### Fisher Discriminant Function
