@@ -29,8 +29,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 ```
 ## Data Manipulation [R](./r_notes.md#data-manipulation-python)
-
-[**↥ back to top**](#table-of-contents)
+                                                                                                                                 
+                                                                                                                                 [**↥ back to top**](#table-of-contents)
 
 ### Indexing
 
