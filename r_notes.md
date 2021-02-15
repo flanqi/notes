@@ -13,6 +13,11 @@
   * [Hierarchical Clustering](#hierarchical-clustering-python)
 * [Deep Learning](#deep-learning)
 ## Data Manipulation [Python](./python_notes.md#data-manipulation-r)
+
+<div align="right">
+    <b><a href="#table-of-contents">↥ back to top</a></b>
+</div>
+
 ### Read data
 ```r
 df = read.csv("data.csv", skip = 1, stringAsFactors = F) # skip first row of data
@@ -118,6 +123,11 @@ substr("hello",1,4) # -> "hell"
 substr(df$Species,1,4) 
 ```
 ## Data Visualization [Python](./python_notes.md#data-visualization-r)
+
+<div align="right">
+    <b><a href="#table-of-contents">↥ back to top</a></b>
+</div>
+
 Click [here](https://www.statmethods.net/advgraphs/parameters.html) to see common r plot parameters.
 
 *Examples*.
@@ -149,6 +159,11 @@ pairs(df, cex = 0.5, pch = 16)
 ```
 
 ## Basic ML [Python](./python_notes.md#basic-ml-r)
+
+<div align="right">
+    <b><a href="#table-of-contents">↥ back to top</a></b>
+</div>
+
 ### Basic Statistics
 ```r
 sd(list) # standard deviation
@@ -379,6 +394,10 @@ to be finished
 
 ## Clustering [Python](./python_notes.md#clustering-r)
 
+<div align="right">
+    <b><a href="#table-of-contents">↥ back to top</a></b>
+</div>
+
 ### KMeans Clustering [Python](./python_notes.md#kmeans-clustering-r)
 
 ```r
@@ -445,6 +464,11 @@ fit$merge # a table of merging process; each row is a merge; negative means a po
 ```
 
 ## Deep Learning
+
+<div align="right">
+    <b><a href="#table-of-contents">↥ back to top</a></b>
+</div>
+
 ### Neural Networks
 Standardization and Normalization
 ```r
