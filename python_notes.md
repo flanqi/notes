@@ -126,6 +126,11 @@ stats.ks_2samp(s1, s2) # small p-value --> samples are from different distributi
 ```
 
 ## Data Visualization [R](./r_notes.md#data-visualization-python)
+
+<div align="right">
+    <b><a href="./python_notes.md">↥ back to top</a></b>
+</div>
+
 Common matplotlib parameters.
 
 
@@ -230,6 +235,11 @@ sns.pairplot(
 )
 ```
 ## Basic ML [R](./r_notes.md#basic-ml-python)
+
+<div align="right">
+    <b><a href="./python_notes.md">↥ back to top</a></b>
+</div>
+
 ### Cross Validation [R](./r_notes.md#cross-validation-python)
 
 ```python
@@ -383,6 +393,11 @@ df['class'] = 1*(glm_binom.predict(X) > cut_off)
 log_lik = np.sum(y*np.log(p_hat)+(1-y)*np.log(1-p_hat))
 ```
 ## Clustering [R](./r_notes.md#clustering-python)
+
+<div align="right">
+    <b><a href="./python_notes.md">↥ back to top</a></b>
+</div>
+
 ### K-Means Clustering [R](./r_notes.md#kmeans-clustering-python)
 Preprocessing
 ```python
