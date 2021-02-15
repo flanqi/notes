@@ -1,7 +1,7 @@
 ## Table of contents
 * [Data Manipulation](#data-manipulation-python)
 * [Data Visualization](#data-visualization-python)
-* [Basic ML](#basic-ml)
+* [Basic ML](#basic-ml-python)
   * [Basic Statistics](#basic-statistics)
   * [Linear Regression](#linear-regression-python)
   * [Logistic Regression](#logistic-regression-python)
