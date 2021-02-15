@@ -31,7 +31,7 @@ import seaborn as sns
 ## Data Manipulation [R](./r_notes.md#data-manipulation-python)
 
 <div align="right">
-    [↥ back to top](#table-of-content)
+    <a href="#table-of-content">↥ back to top</a> 
 </div>
 
 ### Indexing
