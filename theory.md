@@ -12,7 +12,7 @@
 Correlation is a measure of linear relationship between two variables. It is defined by the formula:
 
 <p align="center">
-  <img src="https://latex.codecogs.com/svg.latex?\rho_{X,Y}=Corr(X,Y)=\frac{Cov(X,Y)}{\sigma_X\sigma_Y}=\frac{E(X-\mu_X)(Y-\mu_Y)}{\sigma_X\sigma_Y}" /> 
+  <img src="https://latex.codecogs.com/svg.latex?\rho_{X,Y}=Corr(X,Y)=\frac{Cov(X,Y)}{\sigma_X \sigma_Y}=\frac{E(X-\mu_X)(Y-\mu_Y)}{\sigma_X\sigma_Y}"/> 
 </p>
 
 It is a number between -1 and 1, and the higher the number is in absolute value, the stronger the relationship is. 
