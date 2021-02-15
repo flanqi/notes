@@ -6,6 +6,7 @@
   * [Linear Regression](#linear-regression-python)
   * [Logistic Regression](#logistic-regression-python)
   * [GLMs](#glms)
+  * [Nonlinear Regression](#nonlinear-regression)
   * [Discriminant Analysis](#discriminant-analysis)
   * [Survival Analysis](#survival-analysis)
 * [Clustering](#clustering-python)
@@ -310,6 +311,12 @@ predict = predict(model, newdata = test)
 ```
 ### GLMs
 to be finished.
+### Nonlinear Regression
+This section is about parametric nonlinear regression models and nonlinear least squares. In this problem, we have:
+<p align="center">
+  <img src="https://latex.codecogs.com/svg.latex?Y_i=g(\boldsymbol{x_i},\boldsymbol{\theta})+\epsilon_i" /> 
+</p>
+, where g is the parametric non-linear function we use to model the relationship between Y and x, and <img src="https://render.githubusercontent.com/render/math?math=\epsilon&mode=inline"> is assumed to be normal with zero mean.
 
 ### Discriminant Analysis
 #### Fisher Discriminant Function
