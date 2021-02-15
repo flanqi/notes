@@ -1,4 +1,4 @@
-## Table of contents
+## Table of Contents
 
 * [Set Up](#set-up)
 * [Data Manipulation](#data-manipulation-r)
@@ -30,7 +30,9 @@ import seaborn as sns
 ```
 ## Data Manipulation [R](./r_notes.md#data-manipulation-python)
                                                                                                                                  
-<div align="right"></div>[**↥ back to top**](#table-of-contents)
+<div align="right">
+    <b><a href="#header">↥ back to top</a></b>
+</div>
 
 ### Indexing
 
