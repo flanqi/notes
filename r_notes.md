@@ -11,6 +11,7 @@
 * [Clustering](#clustering-python)
   * [KMeans Clustering](#kmeans-clustering-python)
   * [Hierarchical Clustering](#hierarchical-clustering-python)
+  * [Gaussian Mixture Model](#gaussian-mixture-python)
 * [Deep Learning](#deep-learning)
 * [Trees](#trees)
 
@@ -505,77 +506,6 @@ summary(fit)
 #### Migration Model
 to be finished
 
-## Clustering [Python](./python_notes.md#clustering-r)
-
-<div align="right">
-    <b><a href="#table-of-contents">↥ back to top</a></b>
-</div>
-
-### KMeans Clustering [Python](./python_notes.md#kmeans-clustering-r)
-
-```r
-fit = kmeans(df,3,100,100) # 3 clusters, 100 max iterations, 100 initializations and k-means choose the best one
-```
-
-summary function
-```r
-summary.kmeans = function(fit)
-{
-p = ncol(fit$centers)
-K = nrow(fit$centers)
-n = sum(fit$size)
-xbar = t(fit$centers)%*%fit$size/n
-print(data.frame(
-n=c(fit$size, n),
-Pct=(round(c(fit$size, n)/n,2)),
-round(rbind(fit$centers, t(xbar)), 2),
-RMSE = round(sqrt(c(fit$withinss/(p*(fit$size-1)), fit$tot.withinss/(p*(n-K)))), 4)
-))
-cat("SSE=", fit$tot.withinss, "; SSB=", fit$betweenss, "; SST=", fit$totss, "\n")
-cat("R-Squared = ", fit$betweenss/fit$totss, "\n")
-cat("Pseudo F = ", (fit$betweenss/(K-1))/(fit$tot.withinss/(n-K)), "\n\n");
-invisible(list(Rsqr=fit$betweenss/fit$totss,
-F=(fit$betweenss/(K-1))/(fit$tot.withinss/(n-K))) )
-}
-```
-
-plot the clusters (for profiling)
-```r
-plot.kmeans = function(fit,boxplot=F)
-{
-require(lattice)
-p = ncol(fit$centers)
-k = nrow(fit$centers)
-plotdat = data.frame(
-mu=as.vector(fit$centers),
-clus=factor(rep(1:k, p)),
-var=factor( 0:(p*k-1) %/% k, labels=colnames(fit$centers))
-)
-print(dotplot(var~mu|clus, data=plotdat,
-panel=function(...){
-panel.dotplot(...)
-panel.abline(v=0, lwd=.1)
-},
-layout=c(k,1),
-xlab="Cluster Mean"
-))
-invisible(plotdat)
-}
-```
-
-### Hierarchical Clustering [Python](./python_notes.md#hierarchical-clustering-r)
-
-```r
-fit = hclust(df, method = c("average","single","complete","ward.D") )
-# average: average distance between points in cluster and new point
-# single: minimun distance between points in cluster and new point (chaining)
-# complete: maximum distance between points in cluster and new point
-# ward.D: minimize within-cluster SSE
-
-plot(fit) # plot the hierarchical tree
-fit$merge # a table of merging process; each row is a merge; negative means a point, positive means a cluster
-```
-
 ## Deep Learning
 
 <div align="right">
@@ -678,4 +608,134 @@ tbl = table(df$type)/nrow(df) # type is the target class
 optimal_xerror*(1-max(tbl))
 ```
 
+# Unsupervised Learning
+## Clustering [Python](./python_notes.md#clustering-r)
 
+<div align="right">
+    <b><a href="#table-of-contents">↥ back to top</a></b>
+</div>
+
+### KMeans Clustering [Python](./python_notes.md#kmeans-clustering-r)
+
+```r
+fit = kmeans(df,3,100,100) # 3 clusters, 100 max iterations, 100 initializations and k-means choose the best one
+```
+
+summary function
+```r
+summary.kmeans = function(fit)
+{
+p = ncol(fit$centers)
+K = nrow(fit$centers)
+n = sum(fit$size)
+xbar = t(fit$centers)%*%fit$size/n
+print(data.frame(
+n=c(fit$size, n),
+Pct=(round(c(fit$size, n)/n,2)),
+round(rbind(fit$centers, t(xbar)), 2),
+RMSE = round(sqrt(c(fit$withinss/(p*(fit$size-1)), fit$tot.withinss/(p*(n-K)))), 4)
+))
+cat("SSE=", fit$tot.withinss, "; SSB=", fit$betweenss, "; SST=", fit$totss, "\n")
+cat("R-Squared = ", fit$betweenss/fit$totss, "\n")
+cat("Pseudo F = ", (fit$betweenss/(K-1))/(fit$tot.withinss/(n-K)), "\n\n");
+invisible(list(Rsqr=fit$betweenss/fit$totss,
+F=(fit$betweenss/(K-1))/(fit$tot.withinss/(n-K))) )
+}
+```
+
+plot the clusters (for profiling)
+```r
+plot.kmeans = function(fit,boxplot=F)
+{
+require(lattice)
+p = ncol(fit$centers)
+k = nrow(fit$centers)
+plotdat = data.frame(
+mu=as.vector(fit$centers),
+clus=factor(rep(1:k, p)),
+var=factor( 0:(p*k-1) %/% k, labels=colnames(fit$centers))
+)
+print(dotplot(var~mu|clus, data=plotdat,
+panel=function(...){
+panel.dotplot(...)
+panel.abline(v=0, lwd=.1)
+},
+layout=c(k,1),
+xlab="Cluster Mean"
+))
+invisible(plotdat)
+}
+```
+
+### Hierarchical Clustering [Python](./python_notes.md#hierarchical-clustering-r)
+
+#### Distance Metrics 
+
+Numerical Data:
+```r
+library(proxy)
+x = matrix(c(5,1,4,1), nrow=2) # matrix (5,4 // 1,1)
+
+# Distance
+dist(x) # Euclidean distance of 2 rows
+dist(x, method="maximum") # 4
+dist(x, method="manhattan") # 4+3 = 7
+
+# Similarity
+simil(x) # pearson corr; dist(x, method="correlation") = 1-simil(x)
+simil(x, method="cosine")
+```
+
+Binary Data:
+* Jaccard similarity
+* Simple Matching similarity (co-absences are informative)
+```r
+x = matrix(c(1,1,1,1,0,0,0,0,0,0,0,0,
+             0,0,0,1,1,0,1,0,0,0,0,0,
+             0,1,1,0,1,0,1,0,1,1,1,0), byrow=T, ncol=12, dimnames=list(LETTERS[1:3]))
+simil(x, method="cosine"); 1-dist(x, method="cosine")
+simil(x, method="Jaccard")
+```
+
+#### hclust
+```r
+fit = hclust(df, method = c("average","single","complete","ward.D") )
+# average: average distance between points in cluster and new point
+# single: minimun distance between points in cluster and new point (chaining)
+# complete: maximum distance between points in cluster and new point
+# ward.D: minimize within-cluster SSE
+
+plot(fit) # plot the hierarchical tree
+fit$merge # a table of merging process; each row is a merge; negative means a point, positive means a cluster
+```
+
+### Gaussian Mixutre [Python](./python_notes.md#gaussian-mixture-r)
+
+```r
+library(mclust) 
+fit = Mclust(data, G=2, modelNames = "VVI") # 2 clusters
+# one can leave out the modelNames and plot the fit to see the comparisons of different models
+plot(fit) # plot clusters with elipses, BIC plot of different models, etc.
+
+# proportion of clusters
+fit$parameters$pro
+
+# mean 
+fit$parameters$mean
+
+# covariance matrices
+fit$parameters$vairance$sigma
+
+# correlation matrices
+cov2cor(fit$parameters$vairance$sigma[,,1]) # of the first cluster
+```
+
+## Dimension Reduction
+
+<div align="right">
+    <b><a href="#table-of-contents">↥ back to top</a></b>
+</div>
+
+### PCA
+
+### Factor Analysis
