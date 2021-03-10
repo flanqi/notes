@@ -10,7 +10,7 @@
    * [Logistic Regression](#logistic-regression-r)
 * [Clustering](#clustering-r)
    * [K-Means Clustering](#kmeans-clustering-r)
-   * [Gaussian Mixture](#gaussian-mixture)
+   * [Gaussian Mixture](#gaussian-mixture-r)
 
 
 ## Set Up
@@ -456,7 +456,7 @@ print(smtab.resid_pearson) # residuals
 print(smtab.test_nominal_association().pvalue) # chi-square test p-value
 ```
 
-### Gaussian Mixture
+### Gaussian Mixture [R](./r_notes.md#gaussian-mixture-python)
 
 Choose the model type (covariance_type):
 1. *spherical*： all spherical with different variance/volume (VII)
