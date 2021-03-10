@@ -281,7 +281,7 @@ In binary classification, sometimes we have imbalanced data (p<0.1), and in this
 Steps for Imbalance Correction:
 1. Calculate <img src="https://latex.codecogs.com/svg.latex?p=P(Y=1)" /> for the entire original training set.
 2. Balance the training data to have the desired fraction <img src="https://latex.codecogs.com/svg.latex?p_s" />.
-3. Caculate the population odds <img src="https://latex.codecogs.com/svg.latex?O=\frac{p}{1-p}" /> and <img src="https://latex.codecogs.com/svg.latex?O_s=\frac{p_s}{1-p_s}" /> for the original and balanced samples, respectively.
+3. Caculate the population odds <img src = "https://latex.codecogs.com/svg.latex?O=\frac{p}{1-p}" /> and <img src="https://latex.codecogs.com/svg.latex?O_s=\frac{p_s}{1-p_s}" /> for the original and balanced samples, respectively.
 4. Fit your classification model <img src="https://latex.codecogs.com/svg.latex?p_s(\mathbf{x})=P[Y=1|\mathbf{x}]" /> to the balanced data.
 5. Recover the corrected classification model as follows:
 <p align="center">
