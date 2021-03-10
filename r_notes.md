@@ -8,12 +8,17 @@
   * [GLMs](#glms)
   * [Nonlinear Regression](#nonlinear-regression)
   * [Discriminant Analysis](#discriminant-analysis)
-* [Clustering](#clustering-python)
-  * [KMeans Clustering](#kmeans-clustering-python)
-  * [Hierarchical Clustering](#hierarchical-clustering-python)
-  * [Gaussian Mixture Model](#gaussian-mixture-python)
 * [Deep Learning](#deep-learning)
 * [Trees](#trees)
+* [Unsupervised Learning](#unsupervised-learning) 
+  * [Clustering](#clustering-python)
+    * [KMeans Clustering](#kmeans-clustering-python)
+    * [Hierarchical Clustering](#hierarchical-clustering-python)
+    * [Gaussian Mixture Model](#gaussian-mixture-python)
+  * [Dimension Reduction](#dimension-reduction)
+    * [Principal Componenet Analysis](#pca) 
+    * [Factor Analysis](#factor-analysis)
+
 
 ## Data Manipulation [Python](./python_notes.md#data-manipulation-r)
 
@@ -608,14 +613,14 @@ tbl = table(df$type)/nrow(df) # type is the target class
 optimal_xerror*(1-max(tbl))
 ```
 
-# Unsupervised Learning
-## Clustering [Python](./python_notes.md#clustering-r)
+## Unsupervised Learning
+### Clustering [Python](./python_notes.md#clustering-r)
 
 <div align="right">
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
-### KMeans Clustering [Python](./python_notes.md#kmeans-clustering-r)
+#### KMeans Clustering [Python](./python_notes.md#kmeans-clustering-r)
 
 ```r
 fit = kmeans(df,3,100,100) # 3 clusters, 100 max iterations, 100 initializations and k-means choose the best one
@@ -667,9 +672,9 @@ invisible(plotdat)
 }
 ```
 
-### Hierarchical Clustering [Python](./python_notes.md#hierarchical-clustering-r)
+#### Hierarchical Clustering [Python](./python_notes.md#hierarchical-clustering-r)
 
-#### Distance Metrics 
+##### Distance Metrics 
 
 Numerical Data:
 ```r
@@ -697,7 +702,7 @@ simil(x, method="cosine"); 1-dist(x, method="cosine")
 simil(x, method="Jaccard")
 ```
 
-#### hclust
+##### hclust
 ```r
 fit = hclust(df, method = c("average","single","complete","ward.D") )
 # average: average distance between points in cluster and new point
@@ -709,7 +714,7 @@ plot(fit) # plot the hierarchical tree
 fit$merge # a table of merging process; each row is a merge; negative means a point, positive means a cluster
 ```
 
-### Gaussian Mixutre [Python](./python_notes.md#gaussian-mixture-r)
+#### Gaussian Mixutre [Python](./python_notes.md#gaussian-mixture-r)
 
 ```r
 library(mclust) 
@@ -730,7 +735,7 @@ fit$parameters$vairance$sigma
 cov2cor(fit$parameters$vairance$sigma[,,1]) # of the first cluster
 ```
 
-## Dimension Reduction
+### Dimension Reduction
 
 <div align="right">
     <b><a href="#table-of-contents">↥ back to top</a></b>
