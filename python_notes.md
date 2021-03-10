@@ -240,10 +240,6 @@ sns.pairplot(
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
-<div align="right">
-    <b><a href="./python_notes.md">↥ back to top</a></b>
-</div>
-
 ### Cross Validation [R](./r_notes.md#cross-validation-python)
 
 ```python
