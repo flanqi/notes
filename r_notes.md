@@ -743,4 +743,74 @@ cov2cor(fit$parameters$vairance$sigma[,,1]) # of the first cluster
 
 ### PCA
 
+prcomp package: (uses svd on the dataframe, preferred method)
+```r
+fit = prcomp(data, scale=T) # scale = T if use correlation (incommensurate units)
+plot(fit) # scree plot
+summary(fit) # std, proportion of variance
+
+# loading vector
+fit$rotation
+
+# lambda / variances of PCs
+fit$sdev^2 # same as var(fit$x)
+
+# fitted values / pc scores
+fit$x
+```
+
+hand calculation:
+```r
+cor = cor(data)
+fit = eigen(cor) 
+# $values: variances of PCs / eigenvalues
+# $vectors: PCs / eigenvectors
+
+# fitted values / PC scores / projections for each observation
+scale(data) %*% fit$vectors
+```
+
+princomp package (same as hand calculation, use correlation and eigen, can be supplied only correlation matrix without data):
+```r
+fit = princomp(data, cor=T) # standardized if cor=T; use covmat = cor, if cor/cov is supplied instead of dataframe
+fit$sdev # std of PCs
+fit$loadings # loadings
+fit$scores # pc scores
+```
+
+principal package (can do rotation of PCs, usually used for factor analysis):
+```r
+library(psych)
+fit = principal(data, nfactor=2, rotate="none") # need to specify no rotation for PCA and total number of PCs
+# standardized data by default
+
+fit$loadings # SS loadings are variances of PCs
+# PCs are not normalized, with length equal to std of PC
+
+fit$scores # each PC score is standardized because of scaled PCs 
+```
+
 ### Factor Analysis
+
+Suppose we have some manifest variables to measure some latent variable, which variables should we include?
+
+Cronbach's coefficient:
+```r
+library(psych)
+alpha(data)
+# try dropping some variables and see if it increases alpha
+```
+
+There are two ways to estimate latent variables:
+* MLE
+* PCA
+
+PCA:
+```r
+fit = principal(data) # with rotation
+fit$loadings 
+
+fit$uniqueness # uniqueness:
+1-fit$uniqueness # communality: how much the factors/latent vars account for the variation in x-variables/manifest-vars
+```
+Each PC/RC is a column vector in the L matrix, V(X) = LL'+V(Error). Let's say the first column vector of L is (4,...), then Cor(X1,f1) = 4 (if X is standardized, the correlation between x1 and the first latent var is 4).
