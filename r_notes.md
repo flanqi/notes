@@ -276,12 +276,12 @@ cbind('sensitivity'=sensitivity, 'specificity' = specificity,
 
 **Imbalance Correction with Bayes Classifier**
 
-In binary classification, sometimes we have imbalanced data (<img src="https://latex.codecogs.com/svg.latex?p < 0.1" />), and in this case, we want to upsample our minority class so that <img src="https://latex.codecogs.com/svg.latex?0.3 \le p_s \le 0.7" /> (p_s is the corrected probability). (If CV is used, make sure to upsample within CV, i.e., CV before upsampling).
+In binary classification, sometimes we have imbalanced data (p<0.1), and in this case, we want to upsample our minority class so that 0.3 <= p_s <= 0.7 (p_s is the corrected probability). (If CV is used, make sure to upsample within CV, i.e., CV before upsampling).
 
 Steps for Imbalance Correction:
 1. Calculate <img src="https://latex.codecogs.com/svg.latex?p=P(Y=1)" /> for the entire original training set.
 2. Balance the training data to have the desired fraction <img src="https://latex.codecogs.com/svg.latex?p_s" />.
-3. Caculate the population odds <img src="https://latex.codecogs.com/svg.latex?O=\frac{p}{1-p}" /> and <img src="https://latex.codecogs.com/svg.latex?O=\frac{p_s}{1-p_s}" /> for the original and balanced samples, respectively.
+3. Caculate the population odds <img src="https://latex.codecogs.com/svg.latex? O=\frac{p}{1-p}" /> and <img src="https://latex.codecogs.com/svg.latex? O=\frac{p_s}{1-p_s}" /> for the original and balanced samples, respectively.
 4. Fit your classification model <img src="https://latex.codecogs.com/svg.latex?p_s(\mathbf{x})=P[Y=1|\mathbf{x}]" /> to the balanced data.
 5. Recover the corrected classification model as follows:
 <p align="center">
