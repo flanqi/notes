@@ -8,6 +8,7 @@
   * [GLMs](#glms)
   * [Nonlinear Regression](#nonlinear-regression)
   * [Discriminant Analysis](#discriminant-analysis)
+  * [Survival Analysis](#survival-analysis)
 * [Deep Learning](#deep-learning)
 * [Trees](#trees)
 * [Unsupervised Learning](#unsupervised-learning) 
