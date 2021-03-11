@@ -814,3 +814,31 @@ fit$uniqueness # uniqueness:
 1-fit$uniqueness # communality: how much the factors/latent vars account for the variation in x-variables/manifest-vars
 ```
 Each PC/RC is a column vector in the L matrix, V(X) = LL'+V(Error). Let's say the first column vector of L is (4,...), then Cor(X1,f1) = 4 (if X is standardized, the correlation between x1 and the first latent var is 4).
+
+Explanetory Factor Analysis:
+We want to find a number of latent variables (e.g. math and verbal ability) by using PCA and rotating axes.
+
+Step 1: Decide the number of factors/latent variables (use scree plot or Kaiser's criterion)
+```r
+# prcomp or princomp
+screeplot(fit)
+
+# principal
+plot(1:p, fit$values, type="b") # p = number of dimensions
+abline(h=1)
+```
+
+Step 2: Perform PCA, and find a more interpretable baiss by rotating the axes:
+* Varimax: orthogonal axes with a few large loadings and as many near-zero loadings as possible
+* Oblique/Promax: allow correlated factors
+* Independent component analysis (ICA): independent factors
+```r
+fit = principal(data, nfacor=2, rotate="promax")
+fit
+```
+
+Step 3: Name and purify factors; drop items with small loadings or substantial cross loadings
+```r
+print(fit$loadings, cutoff=0.3, digits=3, sort=T)
+```
+
