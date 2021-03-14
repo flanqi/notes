@@ -518,7 +518,29 @@ summary(fit)
 ```
 
 #### Migration Model
-to be finished
+
+Simplest case: Only 2 states, buyers (1) and non-buyers (0). Customer vector n=(n0, n1); Transition matrix P=(p00,p01\\p10,p11); Net revenue vector v=(v0,v1).
+General case: more states, taking into account recency and frequency (e.g. new customers who made purchases, old customers who made purchases, customers who hasn't made purchase for 1 period, 2 period, etc.). We could have a net revenue matrix, each column is a different type of revenue, e.g. revenue from subscriptions or ads.
+
+Number of Customers at Period k: t(n) x P^k
+Customer Equity: t(n) x (I - P/(1+d))^{-1} x v
+
+```r
+# use prop.table(matrix, 1) to create transition matrix
+lab = c("Churn", "Basic", "Premium")
+P = prop.table(matrix(c(10000,400,200, 1800, 300,100, 240,500,450), nrow=3, ncol=3, byrow=T, dimnames=list(lab,lab), 1)
+
+# number of customers in each segment in two months
+n = c(4000, 4500, 1000, 490)
+t(n)%*%P%*%P
+
+# revenue vector
+rev = matrix(c(0,1, 10,3, 17,0), nrow=3, dimnames=list(lab, c("Subscription","Ad")))
+
+# CE
+d = 0.01
+t(n)%*%solve(diag(3)-P/(1+d))%*%v # outputs CE for subs and id separately
+```
 
 ## Deep Learning
 
@@ -588,6 +610,10 @@ image(f1$x.values, f8$x.values, f18.combined, xlab=names(df)[1], ylab=names(df)[
 ```
 
 ## Trees
+
+<div align="right">
+    <b><a href="#table-of-contents">↥ back to top</a></b>
+</div>
 
 ### Basic Trees
 There is no need to standardize predictors because trees are not influenced by linear transformations.
@@ -667,6 +693,10 @@ r2 = 1-rf$mse[rf$ntree]/var(df$y) # use OOB MSE to compute OOB R^2
 
 ## Time Series
 
+<div align="right">
+    <b><a href="#table-of-contents">↥ back to top</a></b>
+</div>
+
 ### Moving Average 
 MA is usually used for smoothing (out seasonality).
 
@@ -726,6 +756,10 @@ lines(y_hat, col="red")
 ```
 
 ## Nonparametric Methods
+
+<div align="right">
+    <b><a href="#table-of-contents">↥ back to top</a></b>
+</div>
 
 ### KNN 
 
