@@ -1,7 +1,7 @@
 ## Table of contents
 * [Data Manipulation](#data-manipulation-python)
 * [Data Visualization](#data-visualization-python)
-* [Basic ML](#basic-ml-python)
+* [Basic Supervised Learning](#basic-supervised-learning-python)
   * [Basic Statistics](#basic-statistics)
   * [Linear Regression](#linear-regression-python)
   * [Logistic Regression](#logistic-regression-python)
@@ -11,6 +11,14 @@
   * [Survival Analysis](#survival-analysis)
 * [Deep Learning](#deep-learning)
 * [Trees](#trees)
+    * [Gradient Boosting Trees](#gradient-boosting-trees)
+    * [Random Forest](#random-forest)
+* [Time Series](#time-series)
+* [Nonparametric Methods](#nonparametric-methods)
+    * [KNN](#knn)
+    * [LOESS](#loess)
+    * [GAM](#gam)
+    * [PPR](#ppr)
 * [Unsupervised Learning](#unsupervised-learning) 
   * [Clustering](#clustering-python)
     * [KMeans Clustering](#kmeans-clustering-python)
@@ -167,7 +175,7 @@ Matrix Scatterplot of Multiple Variables
 pairs(df, cex = 0.5, pch = 16) 
 ```
 
-## Basic ML [Python](./python_notes.md#basic-ml-r)
+## Basic Supervised Learning [Python](./python_notes.md#basic-ml-r)
 
 <div align="right">
     <b><a href="#table-of-contents">↥ back to top</a></b>
@@ -612,6 +620,171 @@ The code is the same for classification trees. You only need to change the metho
 ```r
 tbl = table(df$type)/nrow(df) # type is the target class
 optimal_xerror*(1-max(tbl))
+```
+
+### Gradient Boosting Trees
+
+```r
+library(gbm)
+set.seed(1)
+gbm = gbm(y~, data=df, distribution="gaussian", n.trees=1000, shrinkage=0.01, interaction.depth=3, cv.folds=nrow(heartdisease),verbose=F)
+
+best.iter = gbm.perf(gbm, method="cv"); best.iter
+1-gbm$cv.error[best.iter]/var(heartdisease$cost)
+summary(gbm)
+
+library(gridExtra)
+plotlist = vector(mode='list', length=8)
+for (i in 1:8){
+ plotlist[[i]] = plot(gbm, i.var=i, n.trees=best.iter)
+}
+do.call(grid.arrange, c(plotlist,nrow=2,ncol=4))
+
+predict(gbm, newdata, n.trees=best.iter)
+```
+
+### Random Forest
+
+```r
+library(randomForest)
+
+set.seed(1)
+rf = randomForest(y~., data=df, mtry=3, ntree=500, nodesize=3, importance=T)
+
+plot(rf)
+print(rf)
+
+importance(rf); varImpPlot(rf)
+
+par(mfrow=c(2,4))
+for (i in c(2:9)){
+ partialPlot(rf, pred.data=df, x.var=names(df)[i], xlab=names(heartdisease)[i], main=NULL)
+}
+
+predict(rf, newdata)
+r2 = 1-rf$mse[rf$ntree]/var(df$y) # use OOB MSE to compute OOB R^2
+```
+
+## Time Series
+
+### Moving Average 
+MA is usually used for smoothing (out seasonality).
+
+```r
+y = ts(df[[1]], deltat=1/12)
+m = 12; n= length(y)
+MA = filter(y, filter=rep(1/m,m), method="convolution", sides=2) # centered smoothing
+plot(y, type="b")
+lines(MA, col="red")
+```
+
+### Exponentially Weighted Moving Average
+Only level prediction.
+```r
+y = ts(df[[1]], deltat=1/12)
+k = 12 # prediction window
+EWMA = HoltWinters(y, seasonal="additive", beta=FALSE, gamma=FALSE)
+EWMAPred = predict(EWMA, n.ahead=k, prediction.interval=T, level=.95)
+plot(EWMA, EWMAPred type="b")
+EWMA
+```
+### Holt Method
+Only level and trend prediction. 
+```r
+Holt = HoltWinters(y, seasonal="additive", gamma=FALSE)
+HoltPred = predict(Holt, n.ahead=k, prediction.interval=T, level=.95)
+plot(Holt, HoltPred type="b")
+Holt
+```
+
+### Holt Winters Method
+Level, trend and seasonality prediction. 
+```r
+HW = HoltWinters(y, seasonal="additive")
+HWPred = predict(HW, n.ahead=k, prediction.interval=T, level=.95)
+plot(HW, HW, type="b")
+HW
+```
+
+If the amplitude of each seasonlity depends on trend (e.g. increasing amplitude and increasing trend), then a multiplicative method should perform better (set seasonal="multiplicative").
+
+### Time Series Decomposition
+
+We decompose ts into 3 parts: trend, seasonality and random errors.
+```r
+Dec = decompose(y. type="additive")
+plot(Dec, type="b")
+
+Dec
+```
+
+Prediction:
+```r
+y_hat = Dec$trend + Dec$seasonal # Dec$trend*Dec$seasonal for mult. method
+plot(y, type="b")
+lines(y_hat, col="red")
+```
+
+## Nonparametric Methods
+
+### KNN 
+
+```r
+library(yaImpute)
+
+# need standardization beforehand
+# use CV to choose the best K
+
+train = as.matrix(df[,2:9]); ytrain = df[,1]
+test = as.matrix(df[,2:9]) # same as train if you want training performance
+
+out = ann(train, test, K, verbose=F) # K=number of neighbors
+ind = as.matrix(out$knnIndexDist[,1:K]) # the k-neighbors' indices for each observation
+
+fit = apply(ind, 1, function(x) mean(ytrain[x])) # training predictions
+# fit = apply(ind, 1, function(x) sum(ytrain[x]==1/length(ytrain[x])) for classification
+```
+
+### LOESS
+
+```r
+# std predictors first
+out = loess(y~., df, degree=1, span=.2) # degree=1:linear, degree=2:quadratic; bigger span means widder window
+predict = predict(out, newdata)
+```
+
+Use Cp to choose parameters:
+```r
+for deg in c(0,1,2){
+ for (lambda in seq(0.1,0.5, 0.05)){
+  out = loess(y~.df, degree=deg, span=lambda)
+  SSE = sum((df$y-out$fitted)^2)
+  Cp = (SSE+2*out$trace.hat*(out$s^2))/nrow(df)
+  print(c(deg,lambda,Cp))
+ }
+}
+```
+
+### GAM
+
+```r
+library(mgcv)
+
+# standardize predictors first
+out = gam(y~s(x1)+s(x2)+x3, data=df, family=gaussian(), sp=c(-1,-1)) # family=binomial() if classification, sp=-1 if uses R to find optimal sp
+summary(out)
+
+# pd plots
+par(mfrow=c(2,4))
+plot(out)
+```
+
+### PPR
+
+```r
+out = ppr(y~., data=df, nterms=M) # M=number of basis functions, use CV to tune
+summary(out)
+plot(out) # pd plots
 ```
 
 ## Unsupervised Learning
