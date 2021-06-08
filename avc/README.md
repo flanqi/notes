@@ -133,3 +133,4 @@ QA should explicitly address the following about the code being reviewed:
 - [ ] README should have a standalone section enumerating/describing any env vars used inproject.
 - [ ] misused whitespaces/hard tabs
 - [ ] pylint for checking styles
+- [ ] add comments to all functions
