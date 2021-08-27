@@ -28,9 +28,10 @@ import matplotlib.pyplot as plt
 %matplotlib inline # make your plot appear and stored in jupyter notebook
 import seaborn as sns
 ```
-## Data Manipulation [R](./ml_r.md#data-manipulation-python)
+## Data Manipulation
                                                                                                                                  
 <div align="right">
+    <b><a href="./ml_r.md#data-manipulation">⇄ R | </a></b>
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
@@ -125,9 +126,10 @@ from scipy import stats
 stats.ks_2samp(s1, s2) # small p-value --> samples are from different distributions
 ```
 
-## Data Visualization [R](./ml_r.md#data-visualization-python)
+## Data Visualization
 
 <div align="right">
+    <b><a href="./ml_r.md#data-visualization">⇄ R | </a></b>
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
@@ -234,13 +236,17 @@ sns.pairplot(
     vars=['var1','var2','var3','var4']
 )
 ```
-## Basic ML [R](./ml_r.md#basic-ml-python)
+## Basic ML
 
 <div align="right">
+    <b><a href="./ml_r.md#basic-ml">⇄ R | </a></b>
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
-### Cross Validation [R](./ml_r.md#cross-validation-python)
+### Cross Validation
+<div align="right">
+    <b><a href="./ml_r.md#cross-validation">⇄ R</a></b>
+</div>
 
 ```python
 from sklearn.model_selection import KFold
@@ -277,7 +283,11 @@ print('Evaluation metric for model1: %.3f'%np.mean(eval1))
 print('Evaluation metric for model2: %.3f'%np.mean(eval2))
 ```
 
-### Linear Regression [R](./ml_r.md#linear-regression-python)
+### Linear Regression
+<div align="right">
+    <b><a href="./ml_r.md#linear-regression">⇄ R</a></b>
+</div>
+
 prepare data:
 ```python
 import statsmodel.api as sm
@@ -355,7 +365,11 @@ print('Best L2 Regularization Penalty: %.3f'%alphas[r2_cv.argmax()])
 
 Use the ame code for Lasso, and just replace the function name by Lasso.
 
-### Logistic Regression [R](./ml_r.md#logistic-regression-python)
+### Logistic Regression
+<div align="right">
+    <b><a href="./ml_r.md#logistic-regression">⇄ R</a></b>
+</div>
+
 prepare data:
 ```python
 import statsmodel.api as sm
@@ -398,7 +412,11 @@ log_lik = np.sum(y*np.log(p_hat)+(1-y)*np.log(1-p_hat))
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
-### KMeans Clustering [R](./ml_r.md#kmeans-clustering-python)
+### KMeans Clustering
+<div align="right">
+    <b><a href="./ml_r.md#kmeans-clustering">⇄ R</a></b>
+</div>
+
 Preprocessing
 ```python
 # standardization
@@ -452,7 +470,10 @@ print(smtab.resid_pearson) # residuals
 print(smtab.test_nominal_association().pvalue) # chi-square test p-value
 ```
 
-### Gaussian Mixture [R](./ml_r.md#gaussian-mixture-python)
+### Gaussian Mixture
+<div align="right">
+    <b><a href="./ml_r.md#gaussian-mixture">⇄ R</a></b>
+</div>
 
 Choose the model type (covariance_type):
 1. *spherical*： all spherical with different variance/volume (VII)
