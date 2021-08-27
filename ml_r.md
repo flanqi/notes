@@ -32,7 +32,7 @@
 ## Data Manipulation
 
 <div align="right">
-    <b><a href="./ml_python.md#data-manipulation-r">⇄ python | </a></b>
+    <b><a href="./ml_python.md#data-manipulation">⇄ python</a></b><b> | </b>
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
@@ -149,7 +149,7 @@ substr(df$Species,1,4)
 ## Data Visualization
 
 <div align="right">
-    <b><a href="./ml_python.md#data-visualization-r">⇄ python | </a></b>
+    <b><a href="./ml_python.md#data-visualization">⇄ python</a></b><b> | </b>
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
@@ -186,7 +186,7 @@ pairs(df, cex = 0.5, pch = 16)
 ## Basic Supervised Learning
 
 <div align="right">
-    <b><a href="./ml_python.md#basic-ml-r">⇄ python | </a></b>
+    <b><a href="./ml_python.md#basic-ml">⇄ python</a></b><b> | </b>
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
@@ -198,7 +198,7 @@ cor.test(df$v1, df$v2) # correlation test
 ```
 ### Linear Regression
 <div align="right">
-    <b><a href="./ml_python.md#linear-regression-r">⇄ python</a></b>
+    <b><a href="./ml_python.md#linear-regression">⇄ python</a></b>
 </div>
 
 ```r
@@ -253,7 +253,7 @@ print(small.lambda.betas)
 
 ### Logistic Regression
 <div align="right">
-    <b><a href="./ml_python.md#logistic-regression-r">⇄ python</a></b>
+    <b><a href="./ml_python.md#logistic-regression">⇄ python</a></b>
 </div>
 
 #### Binary Logistic Regression
@@ -841,13 +841,13 @@ plot(out) # pd plots
 ## Unsupervised Learning
 ### Clustering
 <div align="right">
-    <b><a href="./ml_python.md#clustering-r">⇄ python | </a></b>
+    <b><a href="./ml_python.md#clustering">⇄ python</a></b><b> | </b>
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
 #### KMeans Clustering
 <div align="right">
-    <b><a href="./ml_python.md#kmeans-clustering-r">⇄ python</a></b>
+    <b><a href="./ml_python.md#kmeans-clustering">⇄ python</a></b>
 </div>
 ```r
 fit <- kmeans(df,3,100,100) # 3 clusters, 100 max iterations, 100 initializations and k-means choose the best one
@@ -901,7 +901,7 @@ invisible(plotdat)
 
 #### Hierarchical Clustering
 <div align="right">
-    <b><a href="./ml_python.md#hierarchical-clustering-r">⇄ python</a></b>
+    <b><a href="./ml_python.md#hierarchical-clustering">⇄ python</a></b>
 </div>
 ##### Distance Metrics 
 
@@ -945,7 +945,7 @@ fit$merge # a table of merging process; each row is a merge; negative means a po
 
 #### Gaussian Mixutre
 <div align="right">
-    <b><a href="./ml_python.md#gaussian-mixture-r">⇄ python</a></b>
+    <b><a href="./ml_python.md#gaussian-mixture">⇄ python</a></b>
 </div>
 ```r
 library(mclust) 
