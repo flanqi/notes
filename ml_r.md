@@ -37,13 +37,13 @@
 
 ### Read data
 ```r
-df = read.csv("data.csv", skip = 1, stringAsFactors = F) # skip first row of data
+df <- read.csv("data.csv", skip = 1, stringAsFactors = F) # skip first row of data
 ```
 ### Data Types
-```
+```r
 class(object) # returns the datatype of the object
 
-df$col = parse_number(df$col) # parse the column type to numberm, needs tidyverse library
+df$col <- parse_number(df$col) # parse the column type to numberm, needs tidyverse library
 
 # datetime format
 df$date <- as.POSIXct(df$date, format = '%Y%m%d:%H:%M:%S')
@@ -65,7 +65,7 @@ df[['Sepal.Length']] #vector
 
 ```r
 # select by col names
-cols = c(paste0('v',1:3))
+cols <- c(paste0('v',1:3))
 df[cols]
 df[c('Sepal.Length','Petal.Length')]
 
@@ -87,8 +87,8 @@ df[1:5,1:2]
 
 ```r
 # delete col
-df = iris
-df$Sepal.Length = NULL # this doesn't change original df
+df <- iris
+df$Sepal.Length <- NULL # this doesn't change original df
 ```
 
 ```r
@@ -234,7 +234,7 @@ y = mpg$mpg
 x = model.matrix(mpg~.,mpg)
 
 # set.seed(1)
-ridgecv=cv.glmnet(x, y, alpha=0,lambda=seq(0,5,0.001),nfold=3) # lasso alpha = 1
+ridgecv <- cv.glmnet(x, y, alpha=0,lambda=seq(0,5,0.001),nfold=3) # lasso alpha = 1
 ridgecv$lambda.min # best lambda
 ```
 
@@ -248,10 +248,10 @@ print(small.lambda.betas)
 #### Binary Logistic Regression
 ```r
 # fit the model
-model = glm(Y ~ X, family = binomial, data = df) 
+model <- glm(Y ~ X, family = binomial, data = df) 
 
 # prediction
-predict = predict(model, newdata = test, type = "response") 
+predict <- predict(model, newdata = test, type = "response") 
 
 # confusion matrix
 table(test$Y, predict > cut_off_probability)
@@ -264,14 +264,14 @@ plot.roc(df$Y, model$fitted.values, print.auc=T, xlab="Specificity", ylab="Sensi
 
 Find best cut-off probability:
 ```r
-prob = c()
-CCRs = c() # choose your own metric, here I use CCR/accuracy
+prob <- c()
+CCRs <- c() # choose your own metric, here I use CCR/accuracy
 
 for (p in seq(0,1,0.01)){
-  prob = c(prob,p)
-  tab=table(df$y, predict(model, df, type = "response")>p)
-  CCR=sum(diag(tab))/sum(tab)
-  CCRs = c(CCRs, CCR)
+  prob <- c(prob,p)
+  tab <- table(df$y, predict(model, df, type = "response")>p)
+  CCR <- sum(diag(tab))/sum(tab)
+  CCRs <- c(CCRs, CCR)
 }
 
 p_star <- prob[which.max(CCRs)] # the optimal p
@@ -279,11 +279,11 @@ p_star <- prob[which.max(CCRs)] # the optimal p
 tab = table(radiation$y, probs>p_star) # the final confusion matrix
 
 # other metrics
-sensitivity = tab[2,2]/sum(tab[2,])
-specificity = tab[1,1]/sum(tab[1,])
-precision = tab[2,2]/sum(tab[,2])
-recall = sensitivity
-f1 = 1/(0.5*((1/precision)+(1/recall)))
+sensitivity <- tab[2,2]/sum(tab[2,])
+specificity <- tab[1,1]/sum(tab[1,])
+precision <- tab[2,2]/sum(tab[,2])
+recall <- sensitivity
+f1 <- 1/(0.5*((1/precision)+(1/recall)))
 
 cbind('sensitivity'=sensitivity, 'specificity' = specificity,
       'F1' = f1)
@@ -308,21 +308,21 @@ Steps for Imbalance Correction:
 library(nnet)
 
 # reset the reference group
-df$Y = factor(df$Y)
+df$Y <- factor(df$Y)
 df$Y <- relevel(df$Y, reference_level)
 
 # fit the model
-model = multinom(Y ~ X, data = df, maxit = 1000) 
+model <- multinom(Y ~ X, data = df, maxit = 1000) 
 
 # prediction probabilities
-predict = predict(model, newdata = test, type = "probs") 
-# predict = fitted(model, outcome=F) # predictions for training data
+predict <- predict(model, newdata = test, type = "probs") 
+# predict <- fitted(model, outcome=F) # predictions for training data
 
 # prediction for groups
-pred_class = rep(0,nrow(test))
+pred_class <- rep(0,nrow(test))
 
 for(i in 1:nrow(test)){
-  pred_class[i] = which.is.max(predict[i,]) # this outputs the col number with max prob
+  pred_class[i] <- which.is.max(predict[i,]) # this outputs the col number with max prob
 }
 pred_class
 ```
@@ -330,7 +330,7 @@ pred_class
 Confusion Matrix:
 ```r
 library(caret)
-cfm= confusionMatrix(factor(test$Y), factor(pred_class))
+cfm <- confusionMatrix(factor(test$Y), factor(pred_class))
 cfm
 ```
 
@@ -338,12 +338,12 @@ cfm
 ```r
 # fit the model
 library(ordinal)
-df$Y = as,ordered(df$Y) # default order
-df$Y = ordered(df$Y, levels = c(A,B,C), labels = c(A,B,C)) # set new order
-model = clm(Y ~ X, data = df) 
+df$Y <- as,ordered(df$Y) # default order
+df$Y <- ordered(df$Y, levels = c(A,B,C), labels = c(A,B,C)) # set new order
+model <- clm(Y ~ X, data = df) 
 
 # prediction
-predict = predict(model, newdata = test) 
+predict <- predict(model, newdata = test) 
 ```
 
 ### GLMs
@@ -357,21 +357,21 @@ This section is about parametric nonlinear regression models and nonlinear least
 
 nlm() package:
 ```r
-x1 = df$x1; x2 = df$x2; y = df$y
+x1 <- df$x1; x2 <- df$x2; y <- df$y
 
-fh = function(p) {
- yhat = p[1] + p[2]*x1 + p[3]*exp(p[4]*x2) # the nonlinear function
+fh <- function(p) {
+ yhat <- p[1] + p[2]*x1 + p[3]*exp(p[4]*x2) # the nonlinear function
  return(sum((y-yhat)^2) # return SSE
 }
-out = nlm(fn, p=c(1,0,-0.5,-1), hessian = T)  # one can use some approximation methods to get a good initialization for p
+out <- nlm(fn, p=c(1,0,-0.5,-1), hessian = T)  # one can use some approximation methods to get a good initialization for p
 # hessian is used for deriving Fisher info matrix
 
-theta = out$estimate # parameter estimates
+theta <- out$estimate # parameter estimates
 ```
 nls() package:
 ```r
-fn = function(X1,x2,p){p[1] + p[2]*x1 + p[3]*exp(p[4]*x2)}
-out = nls(y~fn(x1,x2,p), start=list(p=(1,0,-0.5,-1), trace=T)
+fn <- function(X1,x2,p){p[1] + p[2]*x1 + p[3]*exp(p[4]*x2)}
+out <- nls(y~fn(x1,x2,p), start=list(p=(1,0,-0.5,-1), trace=T)
 summary(out)
 ```
 
@@ -379,16 +379,16 @@ Estimating SEs for Parameters:
 1. Using Fisher Info Matrix (applicable with alrge sample size n)
 ```r
 # nlm
-H = out$hessian
-MSE = out$minimum/(nrow(df)-p) # p = number of predictors
-I = (1/(2*MSE))*H # estimate of Fisher Info Matrix
+H <- out$hessian
+MSE <- out$minimum/(nrow(df)-p) # p = number of predictors
+I <- (1/(2*MSE))*H # estimate of Fisher Info Matrix
 
-Cov = solve(I)
-se = sqrt(diag(Cov)) # SEs for parameters
+Cov <- solve(I)
+se <- sqrt(diag(Cov)) # SEs for parameters
 
 # nls
-Cov = vcov(out)
-se = sqrt(diag(Cov))
+Cov <- vcov(out)
+se <- sqrt(diag(Cov))
 ```
 
 2. Boostrapping
@@ -398,22 +398,22 @@ We use bootstrapping when we don't have large sample size to invoke asymptotics 
 ```r
 library(boot)
 
-datafit = function(Z,i, theta0){
- Zboot=Z[i,]
- x = Zboot[[2]]; y = Zboot[[1]]
- fn = function(p){yhat = p[1]*x/(p[2]+x); sum((y-yhat)^2)} # same as nlm() fn
- out = nlm(fn, p=theta0)
- theta = out$estimate
+datafit <- function(Z,i, theta0){
+ Zboot <- Z[i,]
+ x <- Zboot[[2]]; y <- Zboot[[1]]
+ fn <- function(p){yhat <- p[1]*x/(p[2]+x); sum((y-yhat)^2)} # same as nlm() fn
+ out <- nlm(fn, p=theta0)
+ theta <- out$estimate
 }
 
-databoot = boot(df, datafit, R=20000, theta0=c(29.6, 13.4)) # R: number of copies of samples
+databoot <- boot(df, datafit, R=20000, theta0=c(29.6, 13.4)) # R: number of copies of samples
 
 plot(databoot, index=1) # distribution and qq plot of first parameter
 # if the DSTN is approx. normal, we may use crude CI
 
 # estimate SEs
-Cov = cov(datafit$t)
-se = sqrt(diag(Cov))
+Cov <- cov(datafit$t)
+se <- sqrt(diag(Cov))
 
 # estimate parameters
 databoot$t0
@@ -425,22 +425,22 @@ boot.ci(databoot, conf = (.95,.99), index = 1, type = c("norm","basic")) # norma
 Calculate CI and PI for a response:
 ```r
 # CI
-datafit = function(Z,i,theta0, x_pred){
- Zboot = Z[i,]
- x = Zboot[[2]]; y = Zboot[[1]]
- fn = function(p){yhat = p[1]*x/(p[2]+x); sum((y-yhat)^2)} # same as nlm() fn
- out = nlm(fn, p=theta0)
- theta = out$estimate
- y_pred = theta[1]*x_pred/(theta[2]+x_pred)
+datafit <- function(Z,i,theta0, x_pred){
+ Zboot <- Z[i,]
+ x <- Zboot[[2]]; y = Zboot[[1]]
+ fn <- function(p){yhat = p[1]*x/(p[2]+x); sum((y-yhat)^2)} # same as nlm() fn
+ out <- nlm(fn, p=theta0)
+ theta <- out$estimate
+ y_pred <- theta[1]*x_pred/(theta[2]+x_pred)
 }
 
-databoot = boot(df, datafit, R=20000, theta0 = c(29.6,13.4), x_pred = 27)
+databoot <- boot(df, datafit, R=20000, theta0 = c(29.6,13.4), x_pred = 27)
 boot.ci(databoot, type = c("norm", "basic")) # CI
 
 # PI
-Yhat0 = databoot$t0
-SEYhat = sqrt(var(databoot$t))
-SEY = sqrt(SEYhat^2 + MSE)
+Yhat0 <- databoot$t0
+SEYhat <- sqrt(var(databoot$t))
+SEY <- sqrt(SEYhat^2 + MSE)
 
 c(Yhat0-qnorm(0.975)*SEY,Yhat0+qnorm(0.975)*SEY) # PI
 ```
@@ -449,8 +449,8 @@ c(Yhat0-qnorm(0.975)*SEY,Yhat0+qnorm(0.975)*SEY) # PI
 #### Fisher Discriminant Function
 ```r
 library(MASS)
-iris = read.csv("Iris.csv")
-fit = lda(Species_name~., data=iris[2:6], prior = c(1/3,1/3,1/3))
+iris <- read.csv("Iris.csv")
+fit <- lda(Species_name~., data=iris[2:6], prior = c(1/3,1/3,1/3))
 fit
 ```
 
@@ -464,7 +464,7 @@ Sepal_width=3,Sepal_length=5.5))$posterior
 
 ```r
 library(survival)
-fit = survfit(Surv(t, churn) ~ 1. data = df, weight = count) # df is not in long-form, at each customer time t, the number of customers churned / censored are stored in variable "count"
+fit <- survfit(Surv(t, churn) ~ 1. data = df, weight = count) # df is not in long-form, at each customer time t, the number of customers churned / censored are stored in variable "count"
 summary(fit)
 ```
 
@@ -476,9 +476,9 @@ plot(fit)
 survfit doesn't provide harzard and pdf plots, but we can extract results from the summary table.
 ```r
 # table
-res = summary(fit)
-cols = lapply(c(2:6,8:11), function(x) res[x])
-table = do.call(data.frame, cols)
+res <- summary(fit)
+cols <- lapply(c(2:6,8:11), function(x) res[x])
+table <- do.call(data.frame, cols)
 
 # harzard rate plot
 plot(table$time, table$n.event/table$n.risk, type = 'l', xlab = 'time', ylab = 'harzard rate')
@@ -493,7 +493,7 @@ plot(table$time, table$surv, type = 'l', xlab = 'time', ylab = 'survival functio
 
 ```r
 # seperate survival model for different type of service length
-fit = survfit(Surv(t, churn) ~ servicelen, data = df, weight = count)
+fit <- survfit(Surv(t, churn) ~ servicelen, data = df, weight = count)
 
 # survival function plot
 plot(fit, lty = 1:3) # suppose we have 3 types of service length 
@@ -507,19 +507,19 @@ In discrete time model, we need to convert the data into long format, i.e, each 
 
 Turn data into long format:
 ```r
-df_long = survSplit(data = df, cut = 0:12, end = 't', event = 'churn')
+df_long <- survSplit(data = df, cut = 0:12, end = 't', event = 'churn')
 # here cut is usually 0 : max(t)
 ```
 
 Simple Retention Model (r_t = r)
 ```r
-fit = glm(churn ~ 1, binomial, df_long, weight = count)
+fit <- glm(churn ~ 1, binomial, df_long, weight = count)
 summary(fit)
-r = 1-1/(1+exp(-fit$coefficients)) # retention rate
+r <- 1-1/(1+exp(-fit$coefficients)) # retention rate
 ```
 General Retention Model (r_t)
 ```r
-fit = glm(churn ~ factor(t), binomial, df_long, count)
+fit <- glm(churn ~ factor(t), binomial, df_long, count)
 summary(fit)
 ```
 
@@ -533,18 +533,18 @@ Customer Equity: t(n) x (I - P/(1+d))^{-1} x v
 
 ```r
 # use prop.table(matrix, 1) to create transition matrix
-lab = c("Churn", "Basic", "Premium")
-P = prop.table(matrix(c(10000,400,200, 1800, 300,100, 240,500,450), nrow=3, ncol=3, byrow=T, dimnames=list(lab,lab), 1)
+lab <- c("Churn", "Basic", "Premium")
+P <- prop.table(matrix(c(10000,400,200, 1800, 300,100, 240,500,450), nrow=3, ncol=3, byrow=T, dimnames=list(lab,lab), 1)
 
 # number of customers in each segment in two months
-n = c(4000, 4500, 1000, 490)
+n <- c(4000, 4500, 1000, 490)
 t(n)%*%P%*%P
 
 # revenue vector
-rev = matrix(c(0,1, 10,3, 17,0), nrow=3, dimnames=list(lab, c("Subscription","Ad")))
+rev <- matrix(c(0,1, 10,3, 17,0), nrow=3, dimnames=list(lab, c("Subscription","Ad")))
 
 # CE
-d = 0.01
+d <- 0.01
 t(n)%*%solve(diag(3)-P/(1+d))%*%v # outputs CE for subs and id separately
 ```
 
@@ -558,16 +558,16 @@ t(n)%*%solve(diag(3)-P/(1+d))%*%v # outputs CE for subs and id separately
 Standardization and Normalization
 ```r
 # standardize predictors
-df[1:k] = sapply(df[1:k], function(x) (x-mean(x))/sd(x)) # suppose column 1 to k are predictors
+df[1:k] <- sapply(df[1:k], function(x) (x-mean(x))/sd(x)) # suppose column 1 to k are predictors
 
 # normalize output, if the output layer is sigmoid
-df[k+1] = (df[k+1] - min(df[k+1])) / (max(df[k+1]) - min(df[k+1]))
+df[k+1] <- (df[k+1] - min(df[k+1])) / (max(df[k+1]) - min(df[k+1]))
 ```
 
 simple NN (one hidden layer)
 ```r
 library(nnet)
-nn = nnet(target ~ ., df, linout=T, skip=F, size=10, decay=0.1, maxit = 1000, trace=F)
+nn <- nnet(target ~ ., df, linout=T, skip=F, size=10, decay=0.1, maxit = 1000, trace=F)
 # linout: whether the output is linear
 # skip=T adds a linear combination term to model output (originally the output might has a nonlinear activation)
 # size: number of nodes in the hidden layer
@@ -585,7 +585,7 @@ yhat = as.numerica(predict(nn1)) # you can add newdata in the predict function
 first-order ALE
 ```r
 library(ALEPlot)
-yhat = function(X.model, newdata) {
+yhat <- function(X.model, newdata) {
  as.numeric(predict(X.model, newdata))
 }
 
@@ -607,11 +607,11 @@ ALEPlot(df[,1:8], nn, pred.fun=yhat, J=c(2,8), K=50, NA.plot = TRUE)
 #### PD Plots
 ```r
 # interaction between x1 and x8
-f0 = mean(df$target)
-f1 = ALEPlot(df[,1:8], nn, pred.fun=yhat, J=1)
-f8 = ALEPlot(df[,1:8], nn, pred.fun=yhat, J=8)
-f18 = ALEPlot(df[,1:8], nn, pred.fun=yhat, J=c(1,8))
-f18.combined = f0 + outer(f1$f.values, rep(1,13)) + outer(rep(1,51), f8$f.values) + f18$f.values
+f0 <- mean(df$target)
+f1 <- ALEPlot(df[,1:8], nn, pred.fun=yhat, J=1)
+f8 <- ALEPlot(df[,1:8], nn, pred.fun=yhat, J=8)
+f18 <- ALEPlot(df[,1:8], nn, pred.fun=yhat, J=c(1,8))
+f18.combined <- f0 + outer(f1$f.values, rep(1,13)) + outer(rep(1,51), f8$f.values) + f18$f.values
 image(f1$x.values, f8$x.values, f18.combined, xlab=names(df)[1], ylab=names(df)[8], xlim=range(f1$x.values), y=range(f8$x.values), xaxs='i', yaxs='i')
 ```
 
@@ -627,14 +627,14 @@ There is no need to standardize predictors because trees are not influenced by l
 ```r
 library(rpart)
 
-control = rpart.control(minbucket=5, cp=0.0001, xval=10) # 10-fold built-in CV
-fit = rpart(target~., df, method = "anova", control=control)
+control <- rpart.control(minbucket=5, cp=0.0001, xval=10) # 10-fold built-in CV
+fit <- rpart(target~., df, method = "anova", control=control)
 
 plotcp(fit) # plot the 1-R^2 cv versus cp
 printcp(fit) # find optimal cp based on xerror
 
 # pruning
-fit = prune(fit, cp=optimal_cp)
+fit <- prune(fit, cp=optimal_cp)
 fit$cptable[nrow(model4$cptable),] # summary
 
 # feature importance (based on reduction in SSE)
@@ -650,7 +650,7 @@ rpart.plot(fit)
 
 The code is the same for classification trees. You only need to change the method to "class", and factor your target variable. Notice that the xerror in this case will be cv misclassifcation rate / stump misclassifcation rate. Follow the code below to recover cv misclassification rate:
 ```r
-tbl = table(df$type)/nrow(df) # type is the target class
+tbl <- table(df$type)/nrow(df) # type is the target class
 optimal_xerror*(1-max(tbl))
 ```
 
@@ -659,16 +659,16 @@ optimal_xerror*(1-max(tbl))
 ```r
 library(gbm)
 set.seed(1)
-gbm = gbm(y~, data=df, distribution="gaussian", n.trees=1000, shrinkage=0.01, interaction.depth=3, cv.folds=nrow(heartdisease),verbose=F)
+gbm <- gbm(y~, data=df, distribution="gaussian", n.trees=1000, shrinkage=0.01, interaction.depth=3, cv.folds=nrow(heartdisease),verbose=F)
 
-best.iter = gbm.perf(gbm, method="cv"); best.iter
+best.iter <- gbm.perf(gbm, method="cv"); best.iter
 1-gbm$cv.error[best.iter]/var(heartdisease$cost)
 summary(gbm)
 
 library(gridExtra)
-plotlist = vector(mode='list', length=8)
+plotlist <- vector(mode='list', length=8)
 for (i in 1:8){
- plotlist[[i]] = plot(gbm, i.var=i, n.trees=best.iter)
+ plotlist[[i]] <- plot(gbm, i.var=i, n.trees=best.iter)
 }
 do.call(grid.arrange, c(plotlist,nrow=2,ncol=4))
 
@@ -681,7 +681,7 @@ predict(gbm, newdata, n.trees=best.iter)
 library(randomForest)
 
 set.seed(1)
-rf = randomForest(y~., data=df, mtry=3, ntree=500, nodesize=3, importance=T)
+rf <- randomForest(y~., data=df, mtry=3, ntree=500, nodesize=3, importance=T)
 
 plot(rf)
 print(rf)
@@ -694,7 +694,7 @@ for (i in c(2:9)){
 }
 
 predict(rf, newdata)
-r2 = 1-rf$mse[rf$ntree]/var(df$y) # use OOB MSE to compute OOB R^2
+r2 <- 1-rf$mse[rf$ntree]/var(df$y) # use OOB MSE to compute OOB R^2
 ```
 
 ## Time Series
@@ -708,8 +708,8 @@ MA is usually used for smoothing (out seasonality).
 
 ```r
 y = ts(df[[1]], deltat=1/12)
-m = 12; n= length(y)
-MA = filter(y, filter=rep(1/m,m), method="convolution", sides=2) # centered smoothing
+m <- 12; n <- length(y)
+MA <- filter(y, filter=rep(1/m,m), method="convolution", sides=2) # centered smoothing
 plot(y, type="b")
 lines(MA, col="red")
 ```
@@ -717,18 +717,18 @@ lines(MA, col="red")
 ### Exponentially Weighted Moving Average
 Only level prediction.
 ```r
-y = ts(df[[1]], deltat=1/12)
-k = 12 # prediction window
-EWMA = HoltWinters(y, seasonal="additive", beta=FALSE, gamma=FALSE)
-EWMAPred = predict(EWMA, n.ahead=k, prediction.interval=T, level=.95)
+y <- ts(df[[1]], deltat=1/12)
+k <- 12 # prediction window
+EWMA <- HoltWinters(y, seasonal="additive", beta=FALSE, gamma=FALSE)
+EWMAPred <- predict(EWMA, n.ahead=k, prediction.interval=T, level=.95)
 plot(EWMA, EWMAPred type="b")
 EWMA
 ```
 ### Holt Method
 Only level and trend prediction. 
 ```r
-Holt = HoltWinters(y, seasonal="additive", gamma=FALSE)
-HoltPred = predict(Holt, n.ahead=k, prediction.interval=T, level=.95)
+Holt <- HoltWinters(y, seasonal="additive", gamma=FALSE)
+HoltPred <- predict(Holt, n.ahead=k, prediction.interval=T, level=.95)
 plot(Holt, HoltPred type="b")
 Holt
 ```
@@ -736,8 +736,8 @@ Holt
 ### Holt Winters Method
 Level, trend and seasonality prediction. 
 ```r
-HW = HoltWinters(y, seasonal="additive")
-HWPred = predict(HW, n.ahead=k, prediction.interval=T, level=.95)
+HW <- HoltWinters(y, seasonal="additive")
+HWPred <- predict(HW, n.ahead=k, prediction.interval=T, level=.95)
 plot(HW, HW, type="b")
 HW
 ```
@@ -748,7 +748,7 @@ If the amplitude of each seasonlity depends on trend (e.g. increasing amplitude 
 
 We decompose ts into 3 parts: trend, seasonality and random errors.
 ```r
-Dec = decompose(y. type="additive")
+Dec <- decompose(y. type="additive")
 plot(Dec, type="b")
 
 Dec
@@ -756,7 +756,7 @@ Dec
 
 Prediction:
 ```r
-y_hat = Dec$trend + Dec$seasonal # Dec$trend*Dec$seasonal for mult. method
+y_hat <- Dec$trend + Dec$seasonal # Dec$trend*Dec$seasonal for mult. method
 plot(y, type="b")
 lines(y_hat, col="red")
 ```
@@ -775,31 +775,31 @@ library(yaImpute)
 # need standardization beforehand
 # use CV to choose the best K
 
-train = as.matrix(df[,2:9]); ytrain = df[,1]
-test = as.matrix(df[,2:9]) # same as train if you want training performance
+train <- as.matrix(df[,2:9]); ytrain = df[,1]
+test <- as.matrix(df[,2:9]) # same as train if you want training performance
 
-out = ann(train, test, K, verbose=F) # K=number of neighbors
-ind = as.matrix(out$knnIndexDist[,1:K]) # the k-neighbors' indices for each observation
+out <- ann(train, test, K, verbose=F) # K=number of neighbors
+ind <- as.matrix(out$knnIndexDist[,1:K]) # the k-neighbors' indices for each observation
 
-fit = apply(ind, 1, function(x) mean(ytrain[x])) # training predictions
-# fit = apply(ind, 1, function(x) sum(ytrain[x]==1/length(ytrain[x])) for classification
+fit <- apply(ind, 1, function(x) mean(ytrain[x])) # training predictions
+# fit <- apply(ind, 1, function(x) sum(ytrain[x]==1/length(ytrain[x])) for classification
 ```
 
 ### LOESS
 
 ```r
 # std predictors first
-out = loess(y~., df, degree=1, span=.2) # degree=1:linear, degree=2:quadratic; bigger span means widder window
-predict = predict(out, newdata)
+out <- loess(y~., df, degree=1, span=.2) # degree=1:linear, degree=2:quadratic; bigger span means widder window
+predict <- predict(out, newdata)
 ```
 
 Use Cp to choose parameters:
 ```r
 for deg in c(0,1,2){
  for (lambda in seq(0.1,0.5, 0.05)){
-  out = loess(y~.df, degree=deg, span=lambda)
-  SSE = sum((df$y-out$fitted)^2)
-  Cp = (SSE+2*out$trace.hat*(out$s^2))/nrow(df)
+  out <- loess(y~.df, degree=deg, span=lambda)
+  SSE <- sum((df$y-out$fitted)^2)
+  Cp <- (SSE+2*out$trace.hat*(out$s^2))/nrow(df)
   print(c(deg,lambda,Cp))
  }
 }
@@ -811,7 +811,7 @@ for deg in c(0,1,2){
 library(mgcv)
 
 # standardize predictors first
-out = gam(y~s(x1)+s(x2)+x3, data=df, family=gaussian(), sp=c(-1,-1)) # family=binomial() if classification, sp=-1 if uses R to find optimal sp
+out <- gam(y~s(x1)+s(x2)+x3, data=df, family=gaussian(), sp=c(-1,-1)) # family=binomial() if classification, sp=-1 if uses R to find optimal sp
 summary(out)
 
 # pd plots
@@ -822,7 +822,7 @@ plot(out)
 ### PPR
 
 ```r
-out = ppr(y~., data=df, nterms=M) # M=number of basis functions, use CV to tune
+out <- ppr(y~., data=df, nterms=M) # M=number of basis functions, use CV to tune
 summary(out)
 plot(out) # pd plots
 ```
@@ -837,28 +837,28 @@ plot(out) # pd plots
 #### KMeans Clustering [Python](./python_notes.md#kmeans-clustering-r)
 
 ```r
-fit = kmeans(df,3,100,100) # 3 clusters, 100 max iterations, 100 initializations and k-means choose the best one
+fit <- kmeans(df,3,100,100) # 3 clusters, 100 max iterations, 100 initializations and k-means choose the best one
 ```
 
 summary function
 ```r
-summary.kmeans = function(fit)
+summary.kmeans <- function(fit)
 {
-p = ncol(fit$centers)
-K = nrow(fit$centers)
-n = sum(fit$size)
-xbar = t(fit$centers)%*%fit$size/n
+p <- ncol(fit$centers)
+K <- nrow(fit$centers)
+n <- sum(fit$size)
+xbar <- t(fit$centers)%*%fit$size/n
 print(data.frame(
-n=c(fit$size, n),
-Pct=(round(c(fit$size, n)/n,2)),
+n <- c(fit$size, n),
+Pct <- (round(c(fit$size, n)/n,2)),
 round(rbind(fit$centers, t(xbar)), 2),
-RMSE = round(sqrt(c(fit$withinss/(p*(fit$size-1)), fit$tot.withinss/(p*(n-K)))), 4)
+RMSE <- round(sqrt(c(fit$withinss/(p*(fit$size-1)), fit$tot.withinss/(p*(n-K)))), 4)
 ))
 cat("SSE=", fit$tot.withinss, "; SSB=", fit$betweenss, "; SST=", fit$totss, "\n")
 cat("R-Squared = ", fit$betweenss/fit$totss, "\n")
 cat("Pseudo F = ", (fit$betweenss/(K-1))/(fit$tot.withinss/(n-K)), "\n\n");
 invisible(list(Rsqr=fit$betweenss/fit$totss,
-F=(fit$betweenss/(K-1))/(fit$tot.withinss/(n-K))) )
+F <- (fit$betweenss/(K-1))/(fit$tot.withinss/(n-K))) )
 }
 ```
 
@@ -867,20 +867,20 @@ plot the clusters (for profiling)
 plot.kmeans = function(fit,boxplot=F)
 {
 require(lattice)
-p = ncol(fit$centers)
-k = nrow(fit$centers)
-plotdat = data.frame(
-mu=as.vector(fit$centers),
-clus=factor(rep(1:k, p)),
-var=factor( 0:(p*k-1) %/% k, labels=colnames(fit$centers))
+p <- ncol(fit$centers)
+k <- nrow(fit$centers)
+plotdat <- data.frame(
+mu <- as.vector(fit$centers),
+clus <- factor(rep(1:k, p)),
+var <- factor( 0:(p*k-1) %/% k, labels=colnames(fit$centers))
 )
 print(dotplot(var~mu|clus, data=plotdat,
-panel=function(...){
+panel <- function(...){
 panel.dotplot(...)
 panel.abline(v=0, lwd=.1)
 },
-layout=c(k,1),
-xlab="Cluster Mean"
+layout <- c(k,1),
+xlab <- "Cluster Mean"
 ))
 invisible(plotdat)
 }
@@ -893,7 +893,7 @@ invisible(plotdat)
 Numerical Data:
 ```r
 library(proxy)
-x = matrix(c(5,1,4,1), nrow=2) # matrix (5,4 // 1,1)
+x <- matrix(c(5,1,4,1), nrow=2) # matrix (5,4 // 1,1)
 
 # Distance
 dist(x) # Euclidean distance of 2 rows
@@ -909,7 +909,7 @@ Binary Data:
 * Jaccard similarity
 * Simple Matching similarity (co-absences are informative)
 ```r
-x = matrix(c(1,1,1,1,0,0,0,0,0,0,0,0,
+x <- matrix(c(1,1,1,1,0,0,0,0,0,0,0,0,
              0,0,0,1,1,0,1,0,0,0,0,0,
              0,1,1,0,1,0,1,0,1,1,1,0), byrow=T, ncol=12, dimnames=list(LETTERS[1:3]))
 simil(x, method="cosine"); 1-dist(x, method="cosine")
@@ -918,7 +918,7 @@ simil(x, method="Jaccard")
 
 ##### hclust
 ```r
-fit = hclust(df, method = c("average","single","complete","ward.D") )
+fit <- hclust(df, method = c("average","single","complete","ward.D") )
 # average: average distance between points in cluster and new point
 # single: minimun distance between points in cluster and new point (chaining)
 # complete: maximum distance between points in cluster and new point
@@ -932,7 +932,7 @@ fit$merge # a table of merging process; each row is a merge; negative means a po
 
 ```r
 library(mclust) 
-fit = Mclust(data, G=2, modelNames = "VVI") # 2 clusters
+fit <- Mclust(data, G=2, modelNames = "VVI") # 2 clusters
 # one can leave out the modelNames and plot the fit to see the comparisons of different models
 plot(fit) # plot clusters with elipses, BIC plot of different models, etc.
 
@@ -959,7 +959,7 @@ cov2cor(fit$parameters$vairance$sigma[,,1]) # of the first cluster
 
 prcomp package: (uses svd on the dataframe, preferred method)
 ```r
-fit = prcomp(data, scale=T) # scale = T if use correlation (incommensurate units)
+fit <- prcomp(data, scale=T) # scale = T if use correlation (incommensurate units)
 plot(fit) # scree plot
 summary(fit) # std, proportion of variance
 
@@ -975,8 +975,8 @@ fit$x
 
 hand calculation:
 ```r
-cor = cor(data)
-fit = eigen(cor) 
+cor <- cor(data)
+fit <- eigen(cor) 
 # $values: variances of PCs / eigenvalues
 # $vectors: PCs / eigenvectors
 
@@ -986,7 +986,7 @@ scale(data) %*% fit$vectors
 
 princomp package (same as hand calculation, use correlation and eigen, can be supplied only correlation matrix without data):
 ```r
-fit = princomp(data, cor=T) # standardized if cor=T; use covmat = cor, if cor/cov is supplied instead of dataframe
+fit <- princomp(data, cor=T) # standardized if cor=T; use covmat = cor, if cor/cov is supplied instead of dataframe
 fit$sdev # std of PCs
 fit$loadings # loadings
 fit$scores # pc scores
@@ -995,7 +995,7 @@ fit$scores # pc scores
 principal package (can do rotation of PCs, usually used for factor analysis):
 ```r
 library(psych)
-fit = principal(data, nfactor=2, rotate="none") # need to specify no rotation for PCA and total number of PCs
+fit <- principal(data, nfactor=2, rotate="none") # need to specify no rotation for PCA and total number of PCs
 # standardized data by default
 
 fit$loadings # SS loadings are variances of PCs
@@ -1021,7 +1021,7 @@ There are two ways to estimate latent variables:
 
 PCA:
 ```r
-fit = principal(data) # with rotation
+fit <- principal(data) # with rotation
 fit$loadings 
 
 fit$uniqueness # uniqueness:
@@ -1047,7 +1047,7 @@ Step 2: Perform PCA, and find a more interpretable baiss by rotating the axes:
 * Oblique/Promax: allow correlated factors
 * Independent component analysis (ICA): independent factors
 ```r
-fit = principal(data, nfacor=2, rotate="promax")
+fit <- principal(data, nfacor=2, rotate="promax")
 fit
 ```
 
