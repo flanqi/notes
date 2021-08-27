@@ -29,9 +29,10 @@
     * [Factor Analysis](#factor-analysis)
 
 
-## Data Manipulation [Python](./ml_python.md#data-manipulation-r)
+## Data Manipulation
 
 <div align="right">
+    <b><a href="./ml_python.md#data-manipulation-r">⇄ python | </a></b>
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
@@ -145,9 +146,10 @@ df[complete.cases(df), ] # alternative
 substr("hello",1,4) # -> "hell"
 substr(df$Species,1,4) 
 ```
-## Data Visualization [Python](./ml_python.md#data-visualization-r)
+## Data Visualization
 
 <div align="right">
+    <b><a href="./ml_python.md#data-visualization-r">⇄ python | </a></b>
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
@@ -181,9 +183,10 @@ Matrix Scatterplot of Multiple Variables
 pairs(df, cex = 0.5, pch = 16) 
 ```
 
-## Basic Supervised Learning [Python](./ml_python.md#basic-ml-r)
+## Basic Supervised Learning
 
 <div align="right">
+    <b><a href="./ml_python.md#basic-ml-r">⇄ python | </a></b>
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
@@ -193,7 +196,11 @@ sd(list) # standard deviation
 cor(df) # correlation matrix
 cor.test(df$v1, df$v2) # correlation test
 ```
-### Linear Regression [Python](./ml_python.md#linear-regression-r)
+### Linear Regression
+<div align="right">
+    <b><a href="./ml_python.md#linear-regression-r">⇄ python</a></b>
+</div>
+
 ```r
 # fit the model
 model = lm(Y ~ ., data = df) 
@@ -244,7 +251,11 @@ small.lambda.betas <- coef(ridgecv$glmnet.fit)[,small.lambda.index]
 print(small.lambda.betas)
 ```
 
-### Logistic Regression [Python](./ml_python.md#logistic-regression-r)
+### Logistic Regression
+<div align="right">
+    <b><a href="./ml_python.md#logistic-regression-r">⇄ python</a></b>
+</div>
+
 #### Binary Logistic Regression
 ```r
 # fit the model
@@ -828,14 +839,16 @@ plot(out) # pd plots
 ```
 
 ## Unsupervised Learning
-### Clustering [Python](./ml_python.md#clustering-r)
-
+### Clustering
 <div align="right">
+    <b><a href="./ml_python.md#clustering-r">⇄ python | </a></b>
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
-#### KMeans Clustering [Python](./ml_python.md#kmeans-clustering-r)
-
+#### KMeans Clustering
+<div align="right">
+    <b><a href="./ml_python.md#kmeans-clustering-r">⇄ python</a></b>
+</div>
 ```r
 fit <- kmeans(df,3,100,100) # 3 clusters, 100 max iterations, 100 initializations and k-means choose the best one
 ```
@@ -886,8 +899,10 @@ invisible(plotdat)
 }
 ```
 
-#### Hierarchical Clustering [Python](./ml_python.md#hierarchical-clustering-r)
-
+#### Hierarchical Clustering
+<div align="right">
+    <b><a href="./ml_python.md#hierarchical-clustering-r">⇄ python</a></b>
+</div>
 ##### Distance Metrics 
 
 Numerical Data:
@@ -928,8 +943,10 @@ plot(fit) # plot the hierarchical tree
 fit$merge # a table of merging process; each row is a merge; negative means a point, positive means a cluster
 ```
 
-#### Gaussian Mixutre [Python](./ml_python.md#gaussian-mixture-r)
-
+#### Gaussian Mixutre
+<div align="right">
+    <b><a href="./ml_python.md#gaussian-mixture-r">⇄ python</a></b>
+</div>
 ```r
 library(mclust) 
 fit <- Mclust(data, G=2, modelNames = "VVI") # 2 clusters
