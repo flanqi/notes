@@ -31,7 +31,7 @@ import seaborn as sns
 ## Data Manipulation
                                                                                                                                  
 <div align="right">
-    <b><a href="./ml_r.md#data-manipulation">⇄ R | </a></b>
+    <b><a href="./ml_r.md#data-manipulation">⇄ R</a></b><b> | </b>
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
@@ -129,7 +129,7 @@ stats.ks_2samp(s1, s2) # small p-value --> samples are from different distributi
 ## Data Visualization
 
 <div align="right">
-    <b><a href="./ml_r.md#data-visualization">⇄ R | </a></b>
+    <b><a href="./ml_r.md#data-visualization">⇄ R</a></b><b> | </b>
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
@@ -239,7 +239,7 @@ sns.pairplot(
 ## Basic ML
 
 <div align="right">
-    <b><a href="./ml_r.md#basic-ml">⇄ R | </a></b>
+    <b><a href="./ml_r.md#basic-ml">⇄ R</a></b><b> | </b>
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
@@ -406,9 +406,10 @@ df['class'] = 1*(glm_binom.predict(X) > cut_off)
 # calculate log-likelihood manually
 log_lik = np.sum(y*np.log(p_hat)+(1-y)*np.log(1-p_hat))
 ```
-## Clustering [R](./ml_r.md#clustering-python)
+## Clustering
 
 <div align="right">
+    <b><a href="./ml_r.md#clustering">⇄ R</a></b><b> | </b>
     <b><a href="#table-of-contents">↥ back to top</a></b>
 </div>
 
