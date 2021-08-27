@@ -42,8 +42,13 @@ df = read.csv("data.csv", skip = 1, stringAsFactors = F) # skip first row of dat
 ### Data Types
 ```
 class(object) # returns the datatype of the object
+
 df$col = parse_number(df$col) # parse the column type to numberm, needs tidyverse library
+
+# datetime format
+df$date <- as.POSIXct(df$date, format = '%Y%m%d:%H:%M:%S')
 ```
+
 ### Subset & Index
 See [tutorial](https://www.statmethods.net/management/subset.html).
 
@@ -132,7 +137,8 @@ see more about [select](https://dplyr.tidyverse.org/reference/select.html) and [
 See the imputation.r in r_programs folder for imputation techniques.
 
 ```r
-df[complete.cases(df), ] # drop all rows with nas
+df <- na.omit(df) # drop all rows with nas
+df[complete.cases(df), ] # alternative
 ```
 ### Substrings
 ```r
