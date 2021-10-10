@@ -1,16 +1,16 @@
 ## Table of Contents
 
 * [Set Up](#set-up)
-* [Data Manipulation](#data-manipulation-r)
+* [Data Manipulation](#data-manipulation)
 * [Data Sampling](#data-sampling)
-* [Data Visualization](#data-visualization-r)
-* [Basic ML](#basic-ml-r)
-   * [Cross Validation](#cross-validation-r)
-   * [Linear Regression](#linear-regression-r)
-   * [Logistic Regression](#logistic-regression-r)
-* [Clustering](#clustering-r)
-   * [K-Means Clustering](#kmeans-clustering-r)
-   * [Gaussian Mixture](#gaussian-mixture-r)
+* [Data Visualization](#data-visualization)
+* [Basic ML](#basic-ml)
+   * [Cross Validation](#cross-validation)
+   * [Linear Regression](#linear-regression)
+   * [Logistic Regression](#logistic-regression)
+* [Clustering](#clustering)
+   * [K-Means Clustering](#kmeans-clustering)
+   * [Gaussian Mixture](#gaussian-mixture)
 
 
 ## Set Up
