@@ -849,6 +849,7 @@ plot(out) # pd plots
 <div align="right">
     <b><a href="./ml_python.md#kmeans-clustering">⇄ python</a></b>
 </div>
+
 ```r
 fit <- kmeans(df,3,100,100) # 3 clusters, 100 max iterations, 100 initializations and k-means choose the best one
 ```
