@@ -904,6 +904,7 @@ invisible(plotdat)
 <div align="right">
     <b><a href="./ml_python.md#hierarchical-clustering">⇄ python</a></b>
 </div>
+
 ##### Distance Metrics 
 
 Numerical Data:
@@ -948,6 +949,7 @@ fit$merge # a table of merging process; each row is a merge; negative means a po
 <div align="right">
     <b><a href="./ml_python.md#gaussian-mixture">⇄ python</a></b>
 </div>
+
 ```r
 library(mclust) 
 fit <- Mclust(data, G=2, modelNames = "VVI") # 2 clusters
